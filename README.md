@@ -140,3 +140,8 @@ Workflow автоматически определяет base path репози�
 - Formatting is configured with Prettier (`.prettierrc.json`, `.editorconfig`).
 
 Run `npm run format` to format the project and `npm run format:check` to verify formatting.
+
+
+### Vitest и конфигурация сборки
+
+Конфигурации Vite и Vitest разделены: `vite.config.ts` отвечает за production/dev-сборку, а `vitest.config.ts` — за тестовую среду. Это предотвращает конфликт типов плагинов при разных экземплярах Vite в дереве зависимостей. Команда `npm test` автоматически использует `vitest.config.ts`.
