@@ -36,7 +36,7 @@ describe('AdminPage access', () => {
     localStorage.setItem('idolverse-current-role', 'admin');
     renderAdmin();
 
-    expect(screen.getByRole('heading', { name: /с возвращением/i })).toBeInTheDocument();
-    expect(screen.getByText(/каталог артистов/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /обращения/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /каталог артистов/i })).toBeInTheDocument();
   });
 });
