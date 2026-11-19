@@ -145,3 +145,11 @@ Run `npm run format` to format the project and `npm run format:check` to verify 
 ### Vitest и конфигурация сборки
 
 Конфигурации Vite и Vitest разделены: `vite.config.ts` отвечает за production/dev-сборку, а `vitest.config.ts` — за тестовую среду. Это предотвращает конфликт типов плагинов при разных экземплярах Vite в дереве зависимостей. Команда `npm test` автоматически использует `vitest.config.ts`.
+
+## UX update (v42)
+- Removed duplicated footer feedback link and redundant page copy.
+- Added an IDOLVERSE IV monogram favicon.
+- Simplified catalog filters and added search/filter controls to News.
+- Added click-to-open photo lightboxes on idol and group galleries.
+- Simplified the feedback form and admin navigation; moved request counts into the inbox.
+- Enabled native lazy loading and asynchronous image decoding, added image fade-in states, and optimized local JPEG assets while preserving image orientation.

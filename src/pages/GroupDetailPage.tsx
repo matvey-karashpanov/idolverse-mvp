@@ -4,12 +4,14 @@ import { Link, useParams } from 'react-router-dom';
 import { musicGroups } from '../data/groups';
 import { mockIdols, mockNews } from '../data/mockData';
 import { RelatedNewsCarousel } from '../components/RelatedNewsCarousel';
+import { ImageLightbox } from '../components/ImageLightbox';
 
 export function GroupDetailPage() {
   const { id } = useParams();
   const group = musicGroups.find(item => item.id === id);
   const gallery = useRef<HTMLDivElement>(null);
   const [selectedAlbum, setSelectedAlbum] = useState<{year:string;title:string;releaseDate?:string;image?:string;description?:string;tracks?:string[]}|null>(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<{ src: string; alt: string } | null>(null);
 
   if (!group) return <div className="page"><div className="state-panel"><h2>Группа не найдена</h2><p>Возможно, ссылка устарела.</p><Link className="button primary" to="/groups">Вернуться к каталогу групп</Link></div></div>;
 
@@ -20,7 +22,7 @@ export function GroupDetailPage() {
   return <div className="page group-profile-page">
     <Link className="back-link" to="/groups"><ArrowLeft size={16}/> Назад к каталогу групп</Link>
     <section className="group-profile-hero">
-      <div className={`group-profile-art ${group.groupPhoto ? 'has-group-photo' : ''}`}>{group.groupPhoto ? <img src={group.groupPhoto} alt={`${group.name} — групповая фотография`} /> : <><Users size={42}/><span>ФОТО ГРУППЫ</span></>}</div>
+      <div className={`group-profile-art ${group.groupPhoto ? 'has-group-photo' : ''}`}>{group.groupPhoto ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={group.groupPhoto} alt={`${group.name} — групповая фотография`} /> : <><Users size={42}/><span>ФОТО ГРУППЫ</span></>}</div>
       <div className="group-profile-heading"><span className="tag">{group.direction}</span><h1>{group.name}</h1><p>Музыкальная группа</p>
         <div className="social-placeholder" aria-label="Социальные сети"><span><Youtube size={22}/></span><span><Instagram size={22}/></span><span className="tiktok-mark">♪</span></div>
       </div>
@@ -41,7 +43,7 @@ export function GroupDetailPage() {
             <div className="group-member-name">{member.name}</div>
             {member.idol ? (
               <Link className="group-member-photo has-member-photo" to={`/idols/${member.idol.id}`} aria-label={`Открыть профиль ${member.name}`}>
-                {member.idol.photo ? <img src={member.idol.photo} alt={`${member.name} — фотография участника SEVENTEEN`} /> : <><Music2 size={28}/><span>ФОТО УЧАСТНИКА</span></>}
+                {member.idol.photo ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={member.idol.photo} alt={`${member.name} — фотография участника SEVENTEEN`} /> : <><Music2 size={28}/><span>ФОТО УЧАСТНИКА</span></>}
               </Link>
             ) : <div className="group-member-photo"><Music2 size={28}/><span>ФОТО УЧАСТНИКА</span></div>}
             <div className="group-member-role">{member.idol?.role ?? (index === 0 ? 'Участник группы' : 'Участник')}</div>
@@ -60,9 +62,10 @@ export function GroupDetailPage() {
     <section className="profile-section">
       <div className="profile-section-heading"><h2>Фотографии</h2></div>
       <div className="group-gallery-grid">
-        {group.groupGallery?.length ? group.groupGallery.map((photo, index) => <div className="group-gallery-image" key={photo}><img src={photo} alt={`${group.name} — фотография ${index + 1}`} /></div>) : [1,2,3,4].map(item => <div className="group-gallery-placeholder" key={item}><Music2 size={27}/><span>ФОТО ГРУППЫ {item}</span></div>)}
+        {group.groupGallery?.length ? group.groupGallery.map((photo, index) => <button type="button" className="group-gallery-image gallery-image-button" key={photo} onClick={() => setSelectedPhoto({ src: photo, alt: `${group.name} — фотография ${index + 1}` })}><img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} src={photo} alt={`${group.name} — фотография ${index + 1}`} loading="lazy" decoding="async" /></button>) : [1,2,3,4].map(item => <div className="group-gallery-placeholder" key={item}><Music2 size={27}/><span>ФОТО ГРУППЫ {item}</span></div>)}
       </div>
     </section>
+    {selectedPhoto && <ImageLightbox src={selectedPhoto.src} alt={selectedPhoto.alt} onClose={() => setSelectedPhoto(null)} />}
   </div>;
 }
 
@@ -78,7 +81,7 @@ function GroupStrip({title,items,onAlbumClick}:{title:string;items:AlbumItem[];o
       <div className="profile-card-grid" ref={track}>
         {sortedItems.map(item => <article className={`profile-timeline-card ${isDiscography ? 'album-clickable' : ''}`} key={`${item.year}-${item.title}`}>
           {isDiscography ? <button className="album-card-button" type="button" onClick={() => onAlbumClick?.(item)} aria-label={`Открыть альбом ${item.title}`}>
-            <div className={`profile-card-art ${item.image ? 'has-album-cover' : ''}`}>{item.image ? <img className="album-cover-foreground" src={item.image} alt={`Обложка ${item.title}`}/> : <><Music2 size={25}/><span>ОБЛОЖКА АЛЬБОМА</span></>}</div>
+            <div className={`profile-card-art ${item.image ? 'has-album-cover' : ''}`}>{item.image ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" className="album-cover-foreground" src={item.image} alt={`Обложка ${item.title}`}/> : <><Music2 size={25}/><span>ОБЛОЖКА АЛЬБОМА</span></>}</div>
             <div className="profile-card-caption"><strong>{item.releaseDate ?? item.year}</strong><span>{item.title}</span></div>
           </button> : <><div className="profile-card-art"><Music2 size={25}/><span>ИЗОБРАЖЕНИЕ</span></div><div className="profile-card-caption"><strong>{item.year}</strong><span>{item.title}</span></div></>}
         </article>)}
@@ -98,7 +101,7 @@ function AlbumModal({album,onClose}:{album:AlbumItem;onClose:()=>void}) {
   return <div className="album-modal-backdrop" role="presentation" onMouseDown={event => { if(event.target === event.currentTarget) onClose(); }}>
     <section className="album-modal" role="dialog" aria-modal="true" aria-labelledby="album-modal-title">
       <button className="album-modal-close" type="button" onClick={onClose} aria-label="Закрыть">×</button>
-      <div className="album-modal-cover">{album.image ? <img src={album.image} alt={`Обложка альбома ${album.title}`}/> : <div className="album-modal-cover-placeholder"><Music2 size={42}/><span>SEVENTEEN</span></div>}</div>
+      <div className="album-modal-cover">{album.image ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={album.image} alt={`Обложка альбома ${album.title}`}/> : <div className="album-modal-cover-placeholder"><Music2 size={42}/><span>SEVENTEEN</span></div>}</div>
       <div className="album-modal-content">
         <span className="album-modal-eyebrow">SEVENTEEN · ДИСКОГРАФИЯ</span>
         <h2 id="album-modal-title">{album.title}</h2>

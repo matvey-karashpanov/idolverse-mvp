@@ -42,7 +42,7 @@ export function HomePage() {
       <section className="dashboard-hero">
         <div className={`dashboard-hero-carousel hero-slide-${heroSlide}`} aria-label="Фотогалерея групп">
           <Link className="dashboard-hero-slide-link" to={`/groups/${heroSlides[heroSlide].groupId}`} aria-label={`Открыть страницу ${heroSlides[heroSlide].groupName}`}>
-            <img className="dashboard-hero-slide" src={heroSlides[heroSlide].image} alt={heroSlides[heroSlide].alt} />
+            <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" className="dashboard-hero-slide" src={heroSlides[heroSlide].image} alt={heroSlides[heroSlide].alt} />
             <span className="hero-slide-caption">{heroSlides[heroSlide].groupName}</span>
           </Link>
           <div className="hero-carousel-dots" aria-label="Слайды карусели">
@@ -60,7 +60,7 @@ export function HomePage() {
           <div className="dashboard-news-list">
             {news.map((item, index) => (
               <Link className="dashboard-news-item" to="/news" key={item.id}>
-                <span className="dashboard-thumb" aria-hidden="true">{item.image ? <img src={item.image} alt="" /> : ['✦', '♪', '★', '♫', '✧'][index]}</span>
+                <span className="dashboard-thumb" aria-hidden="true">{item.image ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={item.image} alt="" /> : ['✦', '♪', '★', '♫', '✧'][index]}</span>
                 <span>{item.title}</span>
               </Link>
             ))}
@@ -72,7 +72,7 @@ export function HomePage() {
           <div className="dashboard-ranking">
             {topGroups.map((group) => (
               <Link to={`/groups/${group.id}`} className="dashboard-rank" key={group.id}>
-                <span className="rank-logo"><img src={groupLogos[group.id]} alt="" /></span>
+                <span className="rank-logo"><img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={groupLogos[group.id]} alt="" /></span>
                 <strong>{group.name}</strong>
               </Link>
             ))}
@@ -84,7 +84,7 @@ export function HomePage() {
           <div className="dashboard-popular-list">
             {popularIdols.map((idol) => (
               <Link to={`/idols/${idol.id}`} className="dashboard-popular-item" key={idol.id}>
-                <span className="popular-avatar">{idol.photo ? <img src={idol.photo} alt="" /> : idol.name.slice(0, 1)}</span>
+                <span className="popular-avatar">{idol.photo ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={idol.photo} alt="" /> : idol.name.slice(0, 1)}</span>
                 <strong>{idol.name}</strong>
                 <span className="popular-direction">{idol.direction}</span>
               </Link>

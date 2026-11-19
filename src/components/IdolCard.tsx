@@ -23,7 +23,7 @@ export function IdolCard({ idol }: IdolCardProps) {
     <Link className="idol-card" to={`/idols/${idol.id}`}>
       {idol.photo ? (
         <div className={`idol-card-photo ${getPortraitClassName(idol.id)}`}>
-          <img src={idol.photo} alt={`${idol.name} — фотография`} loading="lazy" />
+          <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} src={idol.photo} alt={`${idol.name} — фотография`} loading="lazy" />
         </div>
       ) : (
         <div className="photo-placeholder">

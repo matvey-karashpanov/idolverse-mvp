@@ -5938,3 +5938,165 @@ body * {
     margin-left: auto
   }
 }
+
+/* IDOLVERSE UX refinements */
+.feedback-page {
+  display: flex;
+  justify-content: center;
+}
+
+.feedback-form-standalone {
+  width: min(100%, 820px);
+}
+
+.gallery-image-button {
+  padding: 0;
+  border: 0;
+  color: inherit;
+  cursor: zoom-in;
+  font: inherit;
+}
+
+.gallery-image-button:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 4px;
+}
+
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  padding: 64px 28px 32px;
+  background: rgba(3, 5, 12, .94);
+  backdrop-filter: blur(14px);
+  animation: lightbox-appear .18s ease-out;
+}
+
+.image-lightbox > img {
+  display: block;
+  max-width: min(1100px, 92vw);
+  max-height: calc(100vh - 130px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 24px 90px rgba(0, 0, 0, .55);
+}
+
+.image-lightbox-close {
+  position: absolute;
+  top: 22px;
+  right: 26px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  cursor: pointer;
+}
+
+.image-lightbox-caption {
+  max-width: 90vw;
+  color: #c7cadd;
+  font-size: 12px;
+  text-align: center;
+}
+
+@keyframes lightbox-appear {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Images load only when approaching the viewport; their frames stay stable. */
+img[loading="lazy"] {
+  content-visibility: auto;
+}
+
+@media (max-width: 700px) {
+  .image-lightbox { padding: 62px 14px 24px; }
+  .image-lightbox > img { max-width: 96vw; max-height: calc(100vh - 112px); }
+  .image-lightbox-close { top: 12px; right: 12px; }
+}
+
+.admin-inbox-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 22px 0;
+}
+
+.admin-inbox-stats > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #111827;
+}
+
+.admin-inbox-stats span { color: #9da6bb; font-size: 11px; }
+.admin-inbox-stats strong { color: #f5f5fb; font: 700 22px Manrope, sans-serif; }
+
+.group-gallery-image {
+  display: block;
+  width: 100%;
+  background: #111827;
+}
+
+.profile-gallery-image,
+.group-gallery-image,
+.news-art,
+.group-card-art,
+.group-profile-art,
+.idol-card-photo,
+.profile-photo {
+  background-color: #151d30;
+}
+
+.profile-gallery-image img,
+.group-gallery-image img,
+.news-art img,
+.group-card-art img,
+.group-profile-art img,
+.idol-card-photo img,
+.profile-photo img,
+.dashboard-hero-slide,
+.dashboard-thumb img,
+.rank-logo img,
+.popular-avatar img,
+.profile-card-art img,
+.album-modal-cover img {
+  transition: opacity .24s ease;
+}
+
+.profile-gallery-image img:not(.is-loaded),
+.group-gallery-image img:not(.is-loaded),
+.news-art img:not(.is-loaded),
+.group-card-art img:not(.is-loaded),
+.group-profile-art img:not(.is-loaded),
+.idol-card-photo img:not(.is-loaded),
+.profile-photo img:not(.is-loaded),
+.dashboard-hero-slide:not(.is-loaded),
+.dashboard-thumb img:not(.is-loaded),
+.rank-logo img:not(.is-loaded),
+.popular-avatar img:not(.is-loaded),
+.profile-card-art img:not(.is-loaded),
+.album-modal-cover img:not(.is-loaded) { opacity: 0; }
+
+img.is-loaded { opacity: 1; }
+img.is-error { display: none !important; }
+
+@media (max-width: 700px) {
+  .admin-inbox-stats { grid-template-columns: 1fr; gap: 8px; }
+  .admin-inbox-stats > div { padding: 12px 15px; }
+}

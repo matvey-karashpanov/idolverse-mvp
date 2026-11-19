@@ -101,9 +101,6 @@ export function Layout() {
 
       <footer className="footer">
         <span>© 2025 IDOLVERSE. Все права защищены</span>
-        <div className="footer-links">
-          <Link to="/corrections">Предложить исправление</Link>
-        </div>
       </footer>
 
       {authOpen && (
@@ -135,9 +132,6 @@ export function Layout() {
             </div>
             <span className="auth-eyebrow">WELCOME TO IDOLVERSE</span>
             <h2 id="auth-title">Вход администратора</h2>
-            <p className="auth-subtitle">
-              Войдите в панель управления IDOLVERSE. Посетителям сайта регистрация не требуется.
-            </p>
 
             <form className="auth-form" onSubmit={submitAdminLogin}>
               <label>
@@ -181,9 +175,6 @@ export function Layout() {
               </button>
             </form>
 
-            <p className="auth-disclaimer">
-              Демо-доступ администратора: {ADMIN_EMAIL} · пароль {ADMIN_PASSWORD}
-            </p>
           </section>
         </div>
       )}

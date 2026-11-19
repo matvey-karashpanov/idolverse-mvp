@@ -5,6 +5,7 @@ import { useAppSelector } from '../app/hooks';
 import { mockNews } from '../data/mockData';
 import { musicGroups } from '../data/groups';
 import { RelatedNewsCarousel } from '../components/RelatedNewsCarousel';
+import { ImageLightbox } from '../components/ImageLightbox';
 import { assetUrl } from '../utils/assetUrl';
 
 type IdolAlbum = { year: string; title: string; releaseDate?: string; image?: string; description?: string; tracks?: string[]; memberIds?: string[] };
@@ -14,6 +15,7 @@ export function IdolDetailPage() {
   const idol = useAppSelector((state) => state.idols.items.find((item) => item.id === id));
 
   const [selectedAlbum, setSelectedAlbum] = useState<IdolAlbum|null>(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<{ src: string; alt: string } | null>(null);
   const artistGroup = musicGroups.find(group => group.name.toLowerCase() === idol?.group.toLowerCase());
   const albumItems: IdolAlbum[] = artistGroup
     ? artistGroup.discography
@@ -31,7 +33,7 @@ export function IdolDetailPage() {
       <Link className="back-link" to="/idols"><ArrowLeft size={16}/> Назад к каталогу</Link>
 
       <section className="profile-hero">
-        <div className={`profile-photo ${idol.photo ? 'has-artist-photo' : 'photo-placeholder'} ${['wangyibo', 'mingyu', 'scoups', 'dino'].includes(idol.id) ? `zoom-portrait ${idol.id}-portrait` : ['joshua', 'wonwoo', 'jun', 'hoshi', 'woozi'].includes(idol.id) ? 'subtle-zoom-portrait' : ''}`}>{idol.photo ? <img src={idol.photo} alt={`${idol.name} — фотография артиста`} /> : <><Music2 size={38}/><span>ФОТО АРТИСТА</span></>}</div>
+        <div className={`profile-photo ${idol.photo ? 'has-artist-photo' : 'photo-placeholder'} ${['wangyibo', 'mingyu', 'scoups', 'dino'].includes(idol.id) ? `zoom-portrait ${idol.id}-portrait` : ['joshua', 'wonwoo', 'jun', 'hoshi', 'woozi'].includes(idol.id) ? 'subtle-zoom-portrait' : ''}`}>{idol.photo ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={idol.photo} alt={`${idol.name} — фотография артиста`} /> : <><Music2 size={38}/><span>ФОТО АРТИСТА</span></>}</div>
         <div className="profile-heading">
           <h1>{idol.name}</h1>
           <p className="native-name">{idol.nativeName}</p>
@@ -54,17 +56,18 @@ export function IdolDetailPage() {
         <div className="profile-section-heading"><h2>Фотографии</h2></div>
         <div className="profile-carousel">
           <div className="profile-photo-grid" id="photo-gallery">
-            {idol.photo && <div className="profile-gallery-image"><img src={idol.photo} alt={`${idol.name} — портрет`} /></div>}
-            {idol.id === 'joshua' && <div className="profile-gallery-image"><img src={assetUrl('/images/joshua-jeonghan-album.jpg')} alt="Joshua и Jeonghan — совместная фотография" /></div>}
-            {idol.id === 'jeonghan' && <div className="profile-gallery-image"><img src={assetUrl('/images/joshua-jeonghan-album.jpg')} alt="Jeonghan и Joshua — совместная фотография" /></div>}
-            {(idol.id === 'vernon' || idol.id === 'the8') && <div className="profile-gallery-image"><img src={assetUrl('/images/vernon-the8-album.jpg')} alt="Vernon и The8 — совместная фотография" /></div>}
-            {idol.id === 'dino' && <div className="profile-gallery-image"><img src={assetUrl('/images/dino-album.jpg')} alt="Материал к альбому Dino" /></div>}
-            {(idol.id === 'mingyu' || idol.id === 'scoups') && <div className="profile-gallery-image"><img src={assetUrl('/images/cxm-hype-vibes.jpg')} alt="S.Coups и Mingyu — промофото юнита CxM" /></div>}
+            {idol.photo && <button type="button" className="profile-gallery-image gallery-image-button" onClick={() => setSelectedPhoto({ src: idol.photo!, alt: `${idol.name} — портрет` })}><img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} src={idol.photo} alt={`${idol.name} — портрет`} loading="lazy" decoding="async" /></button>}
+            {idol.id === 'joshua' && <button type="button" className="profile-gallery-image gallery-image-button" onClick={() => setSelectedPhoto({ src: assetUrl('/images/joshua-jeonghan-album.jpg'), alt: "Joshua и Jeonghan — совместная фотография" })}><img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} src={assetUrl('/images/joshua-jeonghan-album.jpg')} alt="Joshua и Jeonghan — совместная фотография" loading="lazy" decoding="async" /></button>}
+            {idol.id === 'jeonghan' && <button type="button" className="profile-gallery-image gallery-image-button" onClick={() => setSelectedPhoto({ src: assetUrl('/images/joshua-jeonghan-album.jpg'), alt: "Jeonghan и Joshua — совместная фотография" })}><img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} src={assetUrl('/images/joshua-jeonghan-album.jpg')} alt="Jeonghan и Joshua — совместная фотография" loading="lazy" decoding="async" /></button>}
+            {(idol.id === 'vernon' || idol.id === 'the8') && <button type="button" className="profile-gallery-image gallery-image-button" onClick={() => setSelectedPhoto({ src: assetUrl('/images/vernon-the8-album.jpg'), alt: "Vernon и The8 — совместная фотография" })}><img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} src={assetUrl('/images/vernon-the8-album.jpg')} alt="Vernon и The8 — совместная фотография" loading="lazy" decoding="async" /></button>}
+            {idol.id === 'dino' && <button type="button" className="profile-gallery-image gallery-image-button" onClick={() => setSelectedPhoto({ src: assetUrl('/images/dino-album.jpg'), alt: "Материал к альбому Dino" })}><img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} src={assetUrl('/images/dino-album.jpg')} alt="Материал к альбому Dino" loading="lazy" decoding="async" /></button>}
+            {(idol.id === 'mingyu' || idol.id === 'scoups') && <button type="button" className="profile-gallery-image gallery-image-button" onClick={() => setSelectedPhoto({ src: assetUrl('/images/cxm-hype-vibes.jpg'), alt: "S.Coups и Mingyu — промофото юнита CxM" })}><img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} src={assetUrl('/images/cxm-hype-vibes.jpg')} alt="S.Coups и Mingyu — промофото юнита CxM" loading="lazy" decoding="async" /></button>}
             {[1, 2, 3].map((item) => <div className="profile-gallery-placeholder" key={item}><Music2 size={24}/><span>ФОТО {item}</span></div>)}
           </div>
           <button className="profile-carousel-arrow" type="button" aria-label="Следующие фотографии" onClick={() => document.getElementById('photo-gallery')?.scrollBy({ left: 360, behavior: 'smooth' })}><ArrowRight/></button>
         </div>
       </section>
+      {selectedPhoto && <ImageLightbox src={selectedPhoto.src} alt={selectedPhoto.alt} onClose={() => setSelectedPhoto(null)} />}
     </div>
   );
 }
@@ -77,7 +80,7 @@ function ProfileCarousel({ title, items, onAlbumClick }: { title: string; items:
       <div className="profile-card-grid" ref={trackRef}>
         {items.map(item => <article className="profile-timeline-card album-clickable" key={`${item.releaseDate ?? item.year}-${item.title}`}>
           <button className="album-card-button" type="button" onClick={()=>onAlbumClick?.(item)} aria-label={`Открыть альбом ${item.title}`}>
-            <div className={`profile-card-art ${item.image ? 'has-album-cover' : ''}`}>{item.image ? <img className="album-cover-foreground" src={item.image} alt={`Обложка ${item.title}`}/> : <><Music2 size={25}/><span>ОБЛОЖКА АЛЬБОМА</span></>}</div>
+            <div className={`profile-card-art ${item.image ? 'has-album-cover' : ''}`}>{item.image ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" className="album-cover-foreground" src={item.image} alt={`Обложка ${item.title}`}/> : <><Music2 size={25}/><span>ОБЛОЖКА АЛЬБОМА</span></>}</div>
             <div className="profile-card-caption"><strong>{item.releaseDate ?? item.year}</strong><span>{item.title}</span></div>
           </button>
         </article>)}
@@ -96,7 +99,7 @@ function IdolAlbumModal({album,onClose}:{album:IdolAlbum;onClose:()=>void}) {
   return <div className="album-modal-backdrop" role="presentation" onMouseDown={event=>{if(event.target===event.currentTarget)onClose();}}>
     <section className="album-modal idol-album-modal" role="dialog" aria-modal="true" aria-labelledby="idol-album-title">
       <button className="album-modal-close" type="button" onClick={onClose} aria-label="Закрыть">×</button>
-      <div className="album-modal-cover">{album.image ? <img src={album.image} alt={`Обложка альбома ${album.title}`}/> : <div className="album-modal-cover-placeholder"><Music2 size={42}/><span>ALBUM ART</span></div>}</div>
+      <div className="album-modal-cover">{album.image ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={album.image} alt={`Обложка альбома ${album.title}`}/> : <div className="album-modal-cover-placeholder"><Music2 size={42}/><span>ALBUM ART</span></div>}</div>
       <div className="album-modal-content">
         <span className="album-modal-eyebrow">{idolGroupLabel(album)} · ДИСКОГРАФИЯ</span>
         <h2 id="idol-album-title">{album.title}</h2>

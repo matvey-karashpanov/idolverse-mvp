@@ -1,4 +1,4 @@
-import { RotateCcw, Search, SlidersHorizontal } from 'lucide-react';
+import { Search, ArrowRight } from 'lucide-react';
 
 import { IdolCard } from '../components/IdolCard';
 import { SectionTitle } from '../components/SectionTitle';
@@ -22,7 +22,6 @@ export function IdolsPage() {
     <div className="page">
       <SectionTitle
         title="Каталог айдолов"
-        description="Находи любимых исполнителей или открывай новые имена на музыкальной карте Азии."
       />
 
       <div className="catalog-toolbar">
@@ -36,11 +35,6 @@ export function IdolsPage() {
           />
           <kbd>⌕</kbd>
         </label>
-
-        <div className="filter-label">
-          <SlidersHorizontal size={16} />
-          Направление
-        </div>
 
         <div className="filter-row">
           {directions.map((item) => (
@@ -60,8 +54,7 @@ export function IdolsPage() {
           onClick={() => dispatch(resetFilters())}
           type="button"
         >
-          <RotateCcw size={15} />
-          Сбросить
+          Сбросить <ArrowRight size={15}/>
         </button>
       </div>
 
