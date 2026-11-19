@@ -6191,3 +6191,20 @@ img.is-error { display: none !important; }
   color-scheme: dark;
 }
 .admin-topbar-kicker { display: none; }
+
+
+/* IDOLVERSE v48 — image framing defaults: show complete group/news artwork. */
+.group-profile-art.has-group-photo img,
+.group-card-art.has-group-photo img,
+.group-gallery-image img,
+.news-art.has-news-image img,
+.related-news-art.has-related-news-image img {
+  object-fit: contain !important;
+  transform: none !important;
+  background: #0b0f1a;
+}
+
+.admin-photo-preview img {
+  object-fit: contain !important;
+  background: #0b0f1a;
+}

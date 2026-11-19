@@ -12,6 +12,8 @@ export interface MusicGroup {
   discography: { year: string; title: string; releaseDate?: string; image?: string; description?: string; tracks?: string[]; memberIds?: string[] }[];
   milestones: { year: string; title: string }[];
   groupPhoto?: string;
+  groupPhotoPositionX?: number;
+  groupPhotoPositionY?: number;
   groupGallery?: string[];
 }
 

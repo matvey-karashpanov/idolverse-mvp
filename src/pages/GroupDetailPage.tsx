@@ -25,7 +25,7 @@ export function GroupDetailPage() {
   return <div className="page group-profile-page">
     <Link className="back-link" to="/groups"><ArrowLeft size={16}/> Назад к каталогу групп</Link>
     <section className="group-profile-hero">
-      <div className={`group-profile-art ${group.groupPhoto ? 'has-group-photo' : ''}`}>{group.groupPhoto ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={group.groupPhoto} alt={`${group.name} — групповая фотография`} /> : <><Users size={42}/><span>ФОТО ГРУППЫ</span></>}</div>
+      <div className={`group-profile-art ${group.groupPhoto ? 'has-group-photo' : ''}`}>{group.groupPhoto ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={group.groupPhoto} style={{objectPosition:`${group.groupPhotoPositionX ?? 50}% ${group.groupPhotoPositionY ?? 50}%`}} alt={`${group.name} — групповая фотография`} /> : <><Users size={42}/><span>ФОТО ГРУППЫ</span></>}</div>
       <div className="group-profile-heading"><span className="tag">{group.direction}</span><h1>{group.name}</h1><p>Музыкальная группа</p>
         <div className="social-placeholder" aria-label="Социальные сети"><span><Youtube size={22}/></span><span><Instagram size={22}/></span><span className="tiktok-mark">♪</span></div>
       </div>

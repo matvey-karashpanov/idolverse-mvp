@@ -13,7 +13,7 @@ export function RelatedNewsCarousel({ items, emptyText = 'Связанных н�
       <div className="profile-card-grid related-news-track">
         {items.map(item => <article className="profile-timeline-card related-news-card" key={item.id}>
           <div className={`profile-card-art related-news-art ${item.image ? 'has-related-news-image' : ''}`}>
-            {item.image ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={item.image} alt={item.title}/> : <><Music2 size={25}/><span>НОВОСТИ</span></>}
+            {item.image ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={item.image} style={{objectPosition:`${item.imagePositionX ?? 50}% ${item.imagePositionY ?? 50}%`}} alt={item.title}/> : <><Music2 size={25}/><span>НОВОСТИ</span></>}
           </div>
           <div className="profile-card-caption">
             <strong>{item.date}</strong>
