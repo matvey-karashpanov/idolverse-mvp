@@ -37,6 +37,6 @@ describe('AdminPage access', () => {
     renderAdmin();
 
     expect(screen.getByRole('heading', { name: /обращения/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /каталог артистов/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^артисты$/i })).toBeInTheDocument();
   });
 });
