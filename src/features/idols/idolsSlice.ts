@@ -79,6 +79,10 @@ const idolsSlice = createSlice({
       state.items.unshift(action.payload);
       writeStorage(STORAGE_KEY, state.items);
     },
+    removeIdol(state, action: PayloadAction<string>) {
+      state.items = state.items.filter((idol) => idol.id !== action.payload);
+      writeStorage(STORAGE_KEY, state.items);
+    },
     updateIdol(state, action: PayloadAction<Idol>) {
       const index = state.items.findIndex((idol) => idol.id === action.payload.id);
 
@@ -108,7 +112,7 @@ const idolsSlice = createSlice({
   },
 });
 
-export const { setQuery, setDirection, resetFilters, addIdol, updateIdol } =
+export const { setQuery, setDirection, resetFilters, addIdol, updateIdol, removeIdol } =
   idolsSlice.actions;
 
 export default idolsSlice.reducer;

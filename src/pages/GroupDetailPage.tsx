@@ -1,23 +1,26 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, Globe2, CalendarDays, Building2, Users, Music2, Youtube, Instagram } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
-import { musicGroups } from '../data/groups';
-import { mockIdols, mockNews } from '../data/mockData';
+import { getGroups, getNews } from '../utils/contentStorage';
+import { useAppSelector } from '../app/hooks';
 import { RelatedNewsCarousel } from '../components/RelatedNewsCarousel';
 import { ImageLightbox } from '../components/ImageLightbox';
 
 export function GroupDetailPage() {
   const { id } = useParams();
-  const group = musicGroups.find(item => item.id === id);
+  const idols = useAppSelector((state) => state.idols.items);
+  const groups = getGroups();
+  const news = getNews();
+  const group = groups.find(item => item.id === id);
   const gallery = useRef<HTMLDivElement>(null);
   const [selectedAlbum, setSelectedAlbum] = useState<{year:string;title:string;releaseDate?:string;image?:string;description?:string;tracks?:string[]}|null>(null);
   const [selectedPhoto, setSelectedPhoto] = useState<{ src: string; alt: string } | null>(null);
 
   if (!group) return <div className="page"><div className="state-panel"><h2>Группа не найдена</h2><p>Возможно, ссылка устарела.</p><Link className="button primary" to="/groups">Вернуться к каталогу групп</Link></div></div>;
 
-  const memberProfiles = mockIdols.filter(idol => idol.group.toLowerCase() === group.name.toLowerCase() || (group.id === 'txt' && idol.group === 'TXT'));
+  const memberProfiles = idols.filter(idol => idol.group.toLowerCase() === group.name.toLowerCase() || (group.id === 'txt' && idol.group === 'TXT'));
   const members = group.members.map(name => ({ name, idol: memberProfiles.find(idol => idol.name.toLowerCase() === name.toLowerCase()) }));
-  const relatedNews = mockNews.filter(item => item.groupIds?.includes(group.id));
+  const relatedNews = news.filter(item => item.groupIds?.includes(group.id));
 
   return <div className="page group-profile-page">
     <Link className="back-link" to="/groups"><ArrowLeft size={16}/> Назад к каталогу групп</Link>

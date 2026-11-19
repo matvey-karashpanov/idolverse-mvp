@@ -1,13 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#c9b8ff"/>
-      <stop offset=".58" stop-color="#9b7cff"/>
-      <stop offset="1" stop-color="#7fb4ff"/>
-    </linearGradient>
-  </defs>
-  <rect width="64" height="64" rx="17" fill="#111827"/>
-  <path d="M14 13h8v25c0 5 2 8 7 8s7-3 7-8V13h8v26c0 10-6 16-15 16S14 49 14 39V13Z" fill="url(#g)"/>
-  <path d="M31 14h8l12 35h-8L31 14Z" fill="#f5f2ff" opacity=".95"/>
-  <path d="M39 14h8L35 49h-8L39 14Z" fill="url(#g)"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c4a8ff"/><stop offset="1" stop-color="#8069e8"/></linearGradient></defs><rect width="64" height="64" rx="18" fill="#0d1220"/><rect x="5" y="5" width="54" height="54" rx="16" fill="url(#g)"/><path d="M16 21h15v5H21v5h9v5h-9v7h-5z" fill="#171126"/><path d="M34 21h14v5h-9v4h8v5h-8v8h-5z" fill="#171126"/></svg>

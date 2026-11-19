@@ -1,26 +1,29 @@
 import { useMemo, useState } from 'react';
 import { CalendarDays, ArrowUpRight, Newspaper, ExternalLink, Search, ArrowRight } from 'lucide-react';
-import { mockIdols, mockNews } from '../data/mockData';
-import { musicGroups } from '../data/groups';
+import { useAppSelector } from '../app/hooks';
+import { getGroups, getNews } from '../utils/contentStorage';
 import { SectionTitle } from '../components/SectionTitle';
 
 const directions = ['Все', 'K-POP', 'C-POP', 'J-POP'] as const;
 
 export function NewsPage() {
+  const idols = useAppSelector((state) => state.idols.items);
   const [query, setQuery] = useState('');
+  const [news] = useState(getNews);
+  const [groups] = useState(getGroups);
   const [direction, setDirection] = useState<(typeof directions)[number]>('Все');
   const filteredNews = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase();
-    return mockNews.filter((item) => {
+    return news.filter((item) => {
       const text = `${item.title} ${item.summary} ${item.category}`.toLocaleLowerCase();
       const relatedGroupIds = item.groupIds ?? [];
-      const relatedIdols = mockIdols.filter((idol) => item.idolIds?.includes(idol.id));
-      const relatedGroups = musicGroups.filter((group) => relatedGroupIds.includes(group.id));
+      const relatedIdols = idols.filter((idol) => item.idolIds?.includes(idol.id));
+      const relatedGroups = groups.filter((group) => relatedGroupIds.includes(group.id));
       const directionsForItem = [...relatedIdols.map((idol) => idol.direction), ...relatedGroups.map((group) => group.direction)];
       const matchesDirection = direction === 'Все' || directionsForItem.includes(direction) || (!relatedGroupIds.length && !item.idolIds?.length);
       return matchesDirection && (!normalized || text.includes(normalized));
     });
-  }, [query, direction]);
+  }, [news, groups, idols, query, direction]);
   const resetFilters = () => { setQuery(''); setDirection('Все'); };
 
   return <div className="page">

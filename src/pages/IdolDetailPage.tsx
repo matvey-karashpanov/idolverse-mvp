@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, CalendarDays, Globe2, Building2, Users, Youtube, Instagram, Music2 } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { useAppSelector } from '../app/hooks';
-import { mockNews } from '../data/mockData';
-import { musicGroups } from '../data/groups';
+import { getNews, getGroups } from '../utils/contentStorage';
+
 import { RelatedNewsCarousel } from '../components/RelatedNewsCarousel';
 import { ImageLightbox } from '../components/ImageLightbox';
 import { assetUrl } from '../utils/assetUrl';
@@ -12,17 +12,19 @@ type IdolAlbum = { year: string; title: string; releaseDate?: string; image?: st
 
 export function IdolDetailPage() {
   const { id } = useParams();
+  const news = getNews();
+  const groups = getGroups();
   const idol = useAppSelector((state) => state.idols.items.find((item) => item.id === id));
 
   const [selectedAlbum, setSelectedAlbum] = useState<IdolAlbum|null>(null);
   const [selectedPhoto, setSelectedPhoto] = useState<{ src: string; alt: string } | null>(null);
-  const artistGroup = musicGroups.find(group => group.name.toLowerCase() === idol?.group.toLowerCase());
+  const artistGroup = groups.find(group => group.name.toLowerCase() === idol?.group.toLowerCase());
   const albumItems: IdolAlbum[] = artistGroup
     ? artistGroup.discography
         .filter(album => !album.memberIds || album.memberIds.includes(idol?.id ?? ''))
         .sort((a,b) => (b.releaseDate ?? b.year).localeCompare(a.releaseDate ?? a.year))
     : [];
-  const relatedNews = mockNews.filter(item => item.idolIds?.includes(idol?.id ?? ''));
+  const relatedNews = news.filter(item => item.idolIds?.includes(idol?.id ?? ''));
 
   if (!idol) {
     return <div className="page"><div className="state-panel"><h2>Артист не найден</h2><p>Возможно, профиль был удалён или ссылка устарела.</p><Link className="button primary" to="/idols">Вернуться в каталог</Link></div></div>;
@@ -33,7 +35,7 @@ export function IdolDetailPage() {
       <Link className="back-link" to="/idols"><ArrowLeft size={16}/> Назад к каталогу</Link>
 
       <section className="profile-hero">
-        <div className={`profile-photo ${idol.photo ? 'has-artist-photo' : 'photo-placeholder'} ${['wangyibo', 'mingyu', 'scoups', 'dino'].includes(idol.id) ? `zoom-portrait ${idol.id}-portrait` : ['joshua', 'wonwoo', 'jun', 'hoshi', 'woozi'].includes(idol.id) ? 'subtle-zoom-portrait' : ''}`}>{idol.photo ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={idol.photo} alt={`${idol.name} — фотография артиста`} /> : <><Music2 size={38}/><span>ФОТО АРТИСТА</span></>}</div>
+        <div className={`profile-photo ${idol.photo ? 'has-artist-photo' : 'photo-placeholder'} ${['wangyibo', 'mingyu', 'scoups', 'dino'].includes(idol.id) ? `zoom-portrait ${idol.id}-portrait` : ['joshua', 'wonwoo', 'jun', 'hoshi', 'woozi'].includes(idol.id) ? 'subtle-zoom-portrait' : ''}`}>{idol.photo ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={idol.photo} style={{ objectPosition: `${idol.photoPositionX ?? 50}% ${idol.photoPositionY ?? 35}%` }} alt={`${idol.name} — фотография артиста`} /> : <><Music2 size={38}/><span>ФОТО АРТИСТА</span></>}</div>
         <div className="profile-heading">
           <h1>{idol.name}</h1>
           <p className="native-name">{idol.nativeName}</p>

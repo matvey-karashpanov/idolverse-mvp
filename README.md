@@ -153,3 +153,9 @@ Run `npm run format` to format the project and `npm run format:check` to verify 
 - Added click-to-open photo lightboxes on idol and group galleries.
 - Simplified the feedback form and admin navigation; moved request counts into the inbox.
 - Enabled native lazy loading and asynchronous image decoding, added image fade-in states, and optimized local JPEG assets while preserving image orientation.
+
+## Admin content management (v44)
+
+The admin workspace now includes separate sections for artists, groups, and news. Admins can create, edit, and delete entries, upload images, and adjust artist portrait framing with horizontal/vertical position controls. Uploaded images are resized to a maximum dimension of 1400px and compressed before saving.
+
+**Storage limitation:** this project is still a static GitHub Pages frontend. Content changes and uploaded images are stored in the current browser's `localStorage`, so they persist in that browser but are not synchronized to other visitors or devices. For shared public publishing, authentication, and durable image hosting, connect a backend/CMS (for example Supabase or Firebase) before using the admin panel as a production content-management system. Large image uploads may still reach the browser's storage quota.

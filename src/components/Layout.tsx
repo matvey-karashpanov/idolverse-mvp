@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react';
-import { Eye, EyeOff, Menu, Sparkles, UserRound, X } from 'lucide-react';
+import { Eye, EyeOff, Menu, UserRound, X } from 'lucide-react';
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 
 const ADMIN_EMAIL = 'admin@idolverse.com';
@@ -61,7 +61,7 @@ export function Layout() {
     <>
       <header className="header">
         <Link className="brand" to="/" onClick={closeMenu}>
-          <Sparkles size={19} />
+          <span className="iv-logo-mark" aria-hidden="true">IV</span>
           <span>IDOLVERSE</span>
         </Link>
 

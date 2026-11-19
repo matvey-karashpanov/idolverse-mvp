@@ -2,21 +2,22 @@ import { useMemo, useState } from 'react';
 import { Search, Users, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SectionTitle } from '../components/SectionTitle';
-import { musicGroups } from '../data/groups';
+import { getGroups } from '../utils/contentStorage';
 
 const directions = ['Все', 'K-POP', 'C-POP', 'J-POP'] as const;
 
 export function GroupsPage() {
   const [query, setQuery] = useState('');
+  const [groups] = useState(getGroups);
   const [direction, setDirection] = useState<(typeof directions)[number]>('Все');
   const filteredGroups = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase();
-    return musicGroups.filter((group) => {
+    return groups.filter((group) => {
       const matchesDirection = direction === 'Все' || group.direction === direction;
       const searchable = [group.name, group.agency, group.country, ...group.members].join(' ').toLocaleLowerCase();
       return matchesDirection && (!normalized || searchable.includes(normalized));
     });
-  }, [query, direction]);
+  }, [groups, query, direction]);
 
   const resetFilters = () => { setQuery(''); setDirection('Все'); };
 

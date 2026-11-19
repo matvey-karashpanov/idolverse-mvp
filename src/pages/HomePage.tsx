@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../app/hooks';
-import { mockNews } from '../data/mockData';
-import { musicGroups } from '../data/groups';
+import { getNews, getGroups } from '../utils/contentStorage';
+
 import { assetUrl } from '../utils/assetUrl';
 
-const topGroups = musicGroups.slice(0, 10);
 const groupLogos: Record<string, string> = {
   bts: assetUrl('/images/bts-logo.jpg'),
   seventeen: assetUrl('/images/seventeen-logo.jpg'),
@@ -27,8 +26,9 @@ const heroSlides = [
 export function HomePage() {
   const idols = useAppSelector((state) => state.idols.items);
   const popularIdols = idols.slice(0, 10);
+  const topGroups = getGroups().slice(0, 10);
   // Hide the first three homepage headlines; keep the remaining seven visible.
-  const news = mockNews.slice(3, 10);
+  const news = getNews().slice(3, 10);
   const [heroSlide, setHeroSlide] = useState(0);
   useEffect(() => {
     const intervalId = window.setInterval(() => {

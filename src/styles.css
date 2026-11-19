@@ -6100,3 +6100,32 @@ img.is-error { display: none !important; }
   .admin-inbox-stats { grid-template-columns: 1fr; gap: 8px; }
   .admin-inbox-stats > div { padding: 12px 15px; }
 }
+
+/* IDOLVERSE IV identity and compact admin workspace */
+.iv-logo-mark {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #c4a8ff, #8069e8);
+  color: #171126;
+  font: 900 14px/1 'Onest', sans-serif;
+  letter-spacing: -2px;
+  padding-right: 2px;
+  box-shadow: 0 5px 18px #9279ed33;
+}
+.header .iv-logo-mark { width: 27px; height: 27px; border-radius: 9px; font-size: 11px; }
+.admin-brand-mark.iv-logo-mark { width: 42px; height: 42px; border-radius: 13px; font-size: 17px; }
+.admin-topbar-right .admin-live-dot { display: none; }
+.admin-profile-mini { display: none !important; }
+.admin-sidebar-bottom { margin-top: auto; border-top: 1px solid var(--line); padding-top: 8px; }
+.admin-manager-toolbar { display:flex; align-items:center; gap:14px; margin:18px 0 22px; }
+.admin-manager-toolbar .catalog-search { flex:1; margin:0; }
+.admin-photo-preview { width:100%; max-width:240px; height:220px; overflow:hidden; border:1px solid var(--line); border-radius:14px; background:#121827; }
+.admin-photo-preview img { width:100%; height:100%; object-fit:cover; }
+.admin-edit-form input[type="file"] { padding:10px; }
+.admin-edit-form input[type="range"] { accent-color:#a58aff; }
+.admin-artist-card .admin-delete-action { align-self:center; padding:8px; border:0; background:transparent; color:#f18b98; cursor:pointer; }
+@media(max-width:760px){ .admin-manager-toolbar{align-items:stretch;flex-direction:column}.admin-manager-toolbar .button{justify-content:center}.admin-photo-preview{max-width:100%} }
