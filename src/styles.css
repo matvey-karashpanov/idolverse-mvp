@@ -6129,3 +6129,65 @@ img.is-error { display: none !important; }
 .admin-edit-form input[type="range"] { accent-color:#a58aff; }
 .admin-artist-card .admin-delete-action { align-self:center; padding:8px; border:0; background:transparent; color:#f18b98; cursor:pointer; }
 @media(max-width:760px){ .admin-manager-toolbar{align-items:stretch;flex-direction:column}.admin-manager-toolbar .button{justify-content:center}.admin-photo-preview{max-width:100%} }
+
+/* Admin Studio: keep native controls consistent with the dark IDOLVERSE UI. */
+.admin-form-grid select,
+.admin-detail-section select,
+.admin-edit-form select {
+  color-scheme: dark;
+  appearance: none;
+  min-height: 40px;
+  width: 100%;
+  padding: 10px 36px 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  outline: 0;
+  background-color: #0c1321;
+  color: #f4f3fa;
+  font: inherit;
+  cursor: pointer;
+}
+.admin-form-grid select:focus,
+.admin-edit-form select:focus {
+  border-color: #a58aff88;
+  box-shadow: 0 0 0 3px #a58aff14;
+}
+.admin-edit-form select option,
+.admin-form-grid select option {
+  background: #111827;
+  color: #f4f3fa;
+}
+.admin-edit-form input[type="file"],
+.admin-form-grid input[type="file"] {
+  width: 100%;
+  min-height: 44px;
+  padding: 7px 9px;
+  border: 1px dashed #a58aff55;
+  border-radius: 10px;
+  background: #111827;
+  color: #c5c9d8;
+  color-scheme: dark;
+}
+.admin-edit-form input[type="file"]::file-selector-button,
+.admin-form-grid input[type="file"]::file-selector-button {
+  margin-right: 12px;
+  padding: 8px 12px;
+  border: 1px solid #a58aff55;
+  border-radius: 7px;
+  background: #a58aff18;
+  color: #d4c8ff;
+  font: 600 11px Manrope, sans-serif;
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease;
+}
+.admin-edit-form input[type="file"]::file-selector-button:hover,
+.admin-form-grid input[type="file"]::file-selector-button:hover {
+  border-color: #a58aff99;
+  background: #a58aff2b;
+}
+.admin-form-grid input:not([type="file"]),
+.admin-form-grid textarea,
+.admin-detail-section textarea {
+  color-scheme: dark;
+}
+.admin-topbar-kicker { display: none; }

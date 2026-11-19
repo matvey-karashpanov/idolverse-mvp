@@ -50,6 +50,5 @@ export function NewsPage() {
         </div>
       </article>)}
     </div> : <div className="state-panel empty-state"><span>✦</span><h3>Ничего не найдено</h3><p>Попробуй изменить запрос или выбрать другое направление.</p><button className="button secondary" onClick={resetFilters}>Сбросить фильтры</button></div>}
-    <p className="demo-disclaimer">Для новостей о релизах указаны ссылки на публикации СМИ и официальные страницы. Остальные материалы ленты демонстрационные.</p>
   </div>;
 }
