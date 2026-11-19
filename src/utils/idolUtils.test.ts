@@ -3,7 +3,12 @@ import { mockIdols } from '../data/mockData';
 import { filterIdols, validateCorrection } from './idolUtils';
 describe('filterIdols', () => {
  it('filters by direction', () => { expect(filterIdols(mockIdols, '', 'C-POP').map(x => x.name)).toEqual(['Wang Yibo']); });
- it('searches case-insensitively by group and name', () => { expect(filterIdols(mockIdols, 'seventeen', 'Все')).toHaveLength(2); expect(filterIdols(mockIdols, 'KARINA', 'Все')[0].id).toBe('karina'); });
+ it('searches case-insensitively by group and name', () => {
+  const seventeenMembers = filterIdols(mockIdols, 'seventeen', 'Все');
+  expect(seventeenMembers).toHaveLength(13);
+  expect(seventeenMembers.every((idol) => idol.group === 'SEVENTEEN')).toBe(true);
+  expect(filterIdols(mockIdols, 'KARINA', 'Все')[0].id).toBe('karina');
+ });
  it('returns empty list when there is no match', () => { expect(filterIdols(mockIdols, 'unknown-artist', 'Все')).toHaveLength(0); });
 });
 describe('validateCorrection', () => {

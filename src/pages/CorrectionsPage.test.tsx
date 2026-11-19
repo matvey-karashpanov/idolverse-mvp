@@ -37,7 +37,7 @@ describe('CorrectionsPage', () => {
 
     expect(await screen.findByText(/укажите имя/i)).toBeInTheDocument();
     expect(screen.getByText(/корректный email/i)).toBeInTheDocument();
-    expect(screen.getByText(/минимум 10 символов/i)).toBeInTheDocument();
+    expect(screen.getByText(/опишите исправление подробнее/i)).toBeInTheDocument();
     expect(store.getState().corrections.items).toHaveLength(0);
   });
 
