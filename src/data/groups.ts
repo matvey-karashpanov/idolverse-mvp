@@ -14,6 +14,7 @@ export interface MusicGroup {
   groupPhoto?: string;
   groupPhotoPositionX?: number;
   groupPhotoPositionY?: number;
+  groupPhotoScale?: number;
   groupGallery?: string[];
 }
 

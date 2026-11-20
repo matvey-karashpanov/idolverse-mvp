@@ -23,18 +23,22 @@ export function GroupDetailPage() {
   const relatedNews = news.filter(item => item.groupIds?.includes(group.id));
 
   return <div className="page group-profile-page">
-    <Link className="back-link" to="/groups"><ArrowLeft size={16}/> Назад к каталогу групп</Link>
     <section className="group-profile-hero">
-      <div className={`group-profile-art ${group.groupPhoto ? 'has-group-photo' : ''}`}>{group.groupPhoto ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={group.groupPhoto} style={{objectPosition:`${group.groupPhotoPositionX ?? 50}% ${group.groupPhotoPositionY ?? 50}%`}} alt={`${group.name} — групповая фотография`} /> : <><Users size={42}/><span>ФОТО ГРУППЫ</span></>}</div>
-      <div className="group-profile-heading"><span className="tag">{group.direction}</span><h1>{group.name}</h1><p>Музыкальная группа</p>
-        <div className="social-placeholder" aria-label="Социальные сети"><span><Youtube size={22}/></span><span><Instagram size={22}/></span><span className="tiktok-mark">♪</span></div>
+      <div className="group-profile-visual">
+        <div className={`group-profile-art ${group.groupPhoto ? 'has-group-photo' : ''}`}>{group.groupPhoto ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={group.groupPhoto} style={{objectPosition:`${group.groupPhotoPositionX ?? 50}% ${group.groupPhotoPositionY ?? 50}%`,transform:`scale(${group.groupPhotoScale ?? 1})`}} alt={`${group.name} — групповая фотография`} /> : <><Users size={42}/><span>ФОТО ГРУППЫ</span></>}</div>
+        <div className="group-logo-rail" aria-label={`${group.name} — логотип группы`}>{Array.from({length:8},(_,index)=><span key={index}>{group.name}</span>)}</div>
       </div>
-      <div className="group-profile-facts">
+      <div className="group-profile-info">
+        <div className="group-profile-heading"><span className="tag">{group.direction}</span><h1>{group.name}</h1><p>Музыкальная группа</p>
+          <div className="social-placeholder" aria-label="Социальные сети"><span><Youtube size={22}/></span><span><Instagram size={22}/></span><span className="tiktok-mark">♪</span></div>
+        </div>
+        <div className="group-profile-facts">
         <div><Globe2/><span>Страна</span><strong>{group.country}</strong></div>
         <div><CalendarDays/><span>Дата дебюта</span><strong>{group.debut}</strong></div>
         <div><Building2/><span>Агентство</span><strong>{group.agency}</strong></div>
         <div><Users/><span>Участники</span><strong>{group.memberCount}</strong></div>
         <div><Music2/><span>Статус</span><strong>{group.status}</strong></div>
+        </div>
       </div>
     </section>
 

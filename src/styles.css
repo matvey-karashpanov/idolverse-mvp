@@ -6208,3 +6208,154 @@ img.is-error { display: none !important; }
   object-fit: contain !important;
   background: #0b0f1a;
 }
+
+
+/* Group profile: editorial full-width hero with a signature violet logo rail. */
+.group-profile-page { padding-top: 0; }
+.group-profile-page .group-profile-hero {
+  width: calc(100% + 48px);
+  margin: 0 -24px 58px;
+  min-height: 540px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(340px, .88fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: stretch;
+  padding: 0 24px 34px 0;
+  border-bottom: 1px solid rgba(169, 143, 255, .14);
+}
+.group-profile-visual { display: flex; min-width: 0; height: 540px; overflow: hidden; border-radius: 0 22px 22px 0; background: #171326; }
+.group-profile-page .group-profile-art {
+  flex: 1 1 auto; min-width: 0; height: 100%; min-height: 0; border-radius: 0;
+  overflow: hidden; background: #111522; position: relative;
+}
+.group-profile-page .group-profile-art img {
+  width: 100%; height: 100%; display: block; object-fit: cover; object-position: center;
+  transform-origin: center; transition: transform .25s ease, opacity .24s ease;
+}
+.group-logo-rail {
+  flex: 0 0 clamp(58px, 7vw, 92px); display: flex; flex-direction: column; justify-content: space-around;
+  align-items: center; overflow: hidden; padding: 18px 7px;
+  background: linear-gradient(180deg, #9a78ed 0%, #7655c9 48%, #493078 100%);
+  color: rgba(24, 17, 43, .8); border-left: 1px solid rgba(255,255,255,.12);
+}
+.group-logo-rail span { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; font-weight: 900; font-size: clamp(10px, 1.1vw, 14px); letter-spacing: .13em; line-height: 1; opacity: .9; }
+.group-logo-rail span:nth-child(even) { color: rgba(241, 233, 255, .88); opacity: .85; }
+.group-profile-info { min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 34px; padding: 42px 0; }
+.group-profile-info .group-profile-heading { padding: 0; min-height: 190px; }
+.group-profile-info .group-profile-heading .social-placeholder { margin-top: 26px; }
+.group-profile-info .group-profile-facts { grid-template-columns: 1fr 1fr; gap: 22px 28px; padding-top: 24px; border-top: 1px solid rgba(169,143,255,.16); }
+.group-profile-info .group-profile-facts > div { grid-template-columns: 1fr; gap: 4px; }
+.group-profile-info .group-profile-facts span { font-size: 12px; color: #969bb0; }
+.group-profile-info .group-profile-facts strong { font-size: 14px; }
+.group-profile-page .group-profile-hero .group-profile-heading h1 { font-size: clamp(34px, 4.5vw, 58px); overflow-wrap: anywhere; }
+.admin-photo-preview { overflow: hidden; }
+.admin-photo-preview img { transform-origin: center; transition: transform .15s ease; }
+@media (max-width: 1000px) {
+ .group-profile-page .group-profile-hero { grid-template-columns: minmax(0,1fr); width: calc(100% + 48px); gap: 0; padding: 0 24px 28px 0; }
+ .group-profile-visual { height: clamp(340px, 58vw, 500px); }
+ .group-profile-info { padding: 30px 24px 12px; }
+}
+@media (max-width: 600px) {
+ .group-profile-page .group-profile-hero { margin-bottom: 38px; }
+ .group-profile-visual { height: 360px; border-radius: 0 14px 14px 0; }
+ .group-logo-rail { flex-basis: 48px; padding: 12px 4px; }
+ .group-logo-rail span { font-size: 9px; }
+ .group-profile-info { padding: 24px 18px 8px; gap: 24px; }
+ .group-profile-info .group-profile-facts { grid-template-columns: 1fr 1fr; gap: 16px; }
+}
+
+
+/* IDOLVERSE v50 — full-bleed group hero with a shared image/info height. */
+.group-profile-page .group-profile-hero {
+  box-sizing: border-box;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: 0 clamp(24px, calc((100vw - 1240px) / 2), 96px) 0 0;
+  min-height: 560px;
+  align-items: stretch;
+  grid-template-columns: minmax(0, 1.12fr) minmax(340px, .88fr);
+  gap: clamp(28px, 4vw, 64px);
+  border-bottom: 0;
+  margin-bottom: 58px;
+}
+
+.group-profile-page .group-profile-visual {
+  align-self: stretch;
+  height: auto;
+  min-height: 560px;
+  width: 100%;
+  border-radius: 0 22px 22px 0;
+}
+
+.group-profile-page .group-profile-art {
+  align-self: stretch;
+  height: auto;
+  min-height: 100%;
+}
+
+.group-profile-page .group-profile-art img {
+  width: 100%;
+  height: 100%;
+  min-height: 560px;
+  object-fit: contain;
+  object-position: center;
+}
+
+.group-profile-page .group-profile-info {
+  align-self: stretch;
+  min-height: 560px;
+  box-sizing: border-box;
+  padding-top: clamp(36px, 4vw, 64px);
+  padding-bottom: clamp(36px, 4vw, 64px);
+}
+
+@media (max-width: 1000px) {
+  .group-profile-page .group-profile-hero {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding-right: 24px;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .group-profile-page .group-profile-visual {
+    height: auto;
+    min-height: clamp(360px, 58vw, 540px);
+  }
+
+  .group-profile-page .group-profile-art,
+  .group-profile-page .group-profile-art img {
+    min-height: clamp(360px, 58vw, 540px);
+  }
+
+  .group-profile-page .group-profile-info {
+    min-height: 0;
+    padding: 32px 24px 36px;
+  }
+}
+
+@media (max-width: 600px) {
+  .group-profile-page .group-profile-hero {
+    padding-right: 12px;
+    margin-bottom: 38px;
+  }
+
+  .group-profile-page .group-profile-visual {
+    min-height: 360px;
+    border-radius: 0 14px 14px 0;
+  }
+
+  .group-profile-page .group-profile-art,
+  .group-profile-page .group-profile-art img {
+    min-height: 360px;
+  }
+
+  .group-profile-page .group-profile-info {
+    padding: 24px 18px 30px;
+  }
+}

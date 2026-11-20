@@ -41,7 +41,7 @@ export function NewsPage() {
     {filteredNews.length ? <div className="news-grid">
       {filteredNews.map((item, index) => <article className="news-card" key={item.id}>
         <div className={`news-art ${item.image ? 'has-news-image' : ''}`}>
-          {item.image ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} src={item.image} style={{objectPosition:`${item.imagePositionX ?? 50}% ${item.imagePositionY ?? 50}%`}} alt={item.title} loading="lazy" decoding="async" /> : <><Newspaper size={34}/><span>NEWS / 0{index + 1}</span></>}
+          {item.image ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} src={item.image} style={{objectPosition:`${item.imagePositionX ?? 50}% ${item.imagePositionY ?? 50}%`,transform:`scale(${item.imageScale ?? 1})`}} alt={item.title} loading="lazy" decoding="async" /> : <><Newspaper size={34}/><span>NEWS / 0{index + 1}</span></>}
         </div>
         <div className="news-body">
           <div className="news-meta"><span className="tag">{item.category}</span><span><CalendarDays size={14}/>{item.date}</span></div>

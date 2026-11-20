@@ -60,7 +60,7 @@ export function HomePage() {
           <div className="dashboard-news-list">
             {news.map((item, index) => (
               <Link className="dashboard-news-item" to="/news" key={item.id}>
-                <span className="dashboard-thumb" aria-hidden="true">{item.image ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={item.image} style={{objectPosition:`${item.imagePositionX ?? 50}% ${item.imagePositionY ?? 50}%`}} alt="" /> : ['✦', '♪', '★', '♫', '✧'][index]}</span>
+                <span className="dashboard-thumb" aria-hidden="true">{item.image ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={item.image} style={{objectPosition:`${item.imagePositionX ?? 50}% ${item.imagePositionY ?? 50}%`,transform:`scale(${item.imageScale ?? 1})`}} alt="" /> : ['✦', '♪', '★', '♫', '✧'][index]}</span>
                 <span>{item.title}</span>
               </Link>
             ))}
