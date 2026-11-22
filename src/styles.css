@@ -7444,3 +7444,9 @@ img.is-error { display: none !important; }
     border-radius: 0 14px 14px 0 !important;
   }
 }
+
+
+/* IDOLVERSE v62 — independent group catalog-card and profile photographs. */
+.group-profile-page .group-profile-visual > .group-profile-art img {
+  max-width: var(--group-photo-max-width, 100%) !important;
+}

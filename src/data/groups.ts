@@ -11,11 +11,17 @@ export interface MusicGroup {
   members: string[];
   discography: { year: string; title: string; releaseDate?: string; image?: string; description?: string; tracks?: string[]; memberIds?: string[] }[];
   milestones: { year: string; title: string }[];
+  /** Main photo shown on the group profile page. */
   groupPhoto?: string;
   groupPhotoPositionX?: number;
   groupPhotoPositionY?: number;
   groupPhotoScale?: number;
-  /** Individual height of the group photo and its matching violet logo rail, in pixels. */
+  /** Independent photo and crop settings for the Groups catalog card. */
+  groupCardPhoto?: string;
+  groupCardPhotoPositionX?: number;
+  groupCardPhotoPositionY?: number;
+  groupCardPhotoScale?: number;
+  /** Legacy field retained for compatibility with previously saved content. */
   groupHeroHeight?: number;
   groupGallery?: string[];
 }
