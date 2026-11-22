@@ -6359,3 +6359,284 @@ img.is-error { display: none !important; }
     padding: 24px 18px 30px;
   }
 }
+
+
+/* IDOLVERSE v51 — make the group photo and violet logo rail exactly equal in height. */
+.group-profile-page .group-profile-hero {
+  align-items: stretch;
+}
+
+.group-profile-page .group-profile-visual {
+  display: flex;
+  align-items: stretch;
+  align-self: stretch;
+  height: clamp(560px, 66vw, 760px);
+  min-height: 0;
+  max-height: 760px;
+  overflow: hidden;
+}
+
+.group-profile-page .group-profile-art {
+  display: block;
+  flex: 1 1 0;
+  align-self: stretch;
+  width: 0;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.group-profile-page .group-profile-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.group-profile-page .group-logo-rail {
+  flex: 0 0 clamp(58px, 7vw, 92px);
+  align-self: stretch;
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1000px) {
+  .group-profile-page .group-profile-visual {
+    height: clamp(420px, 72vw, 620px);
+    min-height: 0;
+    max-height: 620px;
+  }
+
+  .group-profile-page .group-profile-art,
+  .group-profile-page .group-profile-art img {
+    height: 100%;
+    min-height: 0;
+    max-height: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .group-profile-page .group-profile-visual {
+    height: clamp(360px, 105vw, 480px);
+    min-height: 0;
+    max-height: 480px;
+  }
+}
+
+
+/* IDOLVERSE v52 — each group profile owns its own photo/rail height. */
+.group-profile-page .group-profile-visual {
+  height: auto; /* The page supplies an individual inline height for each group. */
+  min-height: 0;
+  max-height: none;
+  align-items: stretch;
+}
+.group-profile-page .group-profile-art,
+.group-profile-page .group-logo-rail {
+  height: 100%;
+  min-height: 0;
+  align-self: stretch;
+}
+.group-profile-page .group-profile-art img {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
+  object-fit: cover;
+}
+@media (max-width: 1000px) {
+  .group-profile-page .group-profile-visual { height: auto; }
+}
+
+
+/* IDOLVERSE v53 — the group image must fill the exact same box as its logo rail.
+   Override the earlier global contain rule for group hero images only. */
+.group-profile-page .group-profile-visual {
+  display: flex !important;
+  align-items: stretch !important;
+  overflow: hidden !important;
+}
+
+.group-profile-page .group-profile-visual > .group-profile-art {
+  flex: 1 1 0 !important;
+  width: 0 !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  align-self: stretch !important;
+  overflow: hidden !important;
+}
+
+.group-profile-page .group-profile-visual > .group-profile-art.has-group-photo img,
+.group-profile-page .group-profile-visual > .group-profile-art img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  object-position: var(--group-photo-position, center) !important;
+}
+
+.group-profile-page .group-profile-visual > .group-logo-rail {
+  flex: 0 0 clamp(58px, 7vw, 92px) !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  align-self: stretch !important;
+  box-sizing: border-box !important;
+}
+
+/* Keep per-group inline height authoritative at every breakpoint. */
+@media (max-width: 1000px) {
+  .group-profile-page .group-profile-visual {
+    height: inherit;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+  .group-profile-page .group-profile-visual > .group-profile-art,
+  .group-profile-page .group-profile-visual > .group-logo-rail {
+    height: 100% !important;
+    min-height: 0 !important;
+  }
+}
+
+
+/* IDOLVERSE v54 — derive the violet rail height from the actual photo ratio.
+   The photo is never forced into a fixed-height box; the rail stretches to it. */
+.group-profile-page .group-profile-hero {
+  align-items: start !important;
+  grid-template-rows: auto !important;
+}
+
+.group-profile-page .group-profile-visual {
+  display: flex !important;
+  align-items: stretch !important;
+  align-self: start !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.group-profile-page .group-profile-visual > .group-profile-art {
+  display: block !important;
+  flex: 1 1 0 !important;
+  width: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  align-self: auto !important;
+  overflow: hidden !important;
+}
+
+.group-profile-page .group-profile-visual > .group-profile-art img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: var(--group-photo-position, center) !important;
+}
+
+/* Flex stretch makes the strip exactly as tall as the naturally sized image. */
+.group-profile-page .group-profile-visual > .group-logo-rail {
+  display: flex !important;
+  flex: 0 0 clamp(58px, 7vw, 92px) !important;
+  flex-direction: column !important;
+  justify-content: space-around !important;
+  align-self: stretch !important;
+  height: auto !important;
+  min-height: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+/* Information remains in its own column; it is not globally pushed down. */
+.group-profile-page .group-profile-info {
+  align-self: start !important;
+  min-height: 0 !important;
+}
+
+/* On narrow screens, the photo and strip remain one unit and keep natural ratio. */
+@media (max-width: 1000px) {
+  .group-profile-page .group-profile-hero {
+    align-items: start !important;
+    grid-template-rows: auto auto !important;
+  }
+
+  .group-profile-page .group-profile-visual {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+
+  .group-profile-page .group-profile-visual > .group-profile-art,
+  .group-profile-page .group-profile-visual > .group-profile-art img {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+
+  .group-profile-page .group-profile-info {
+    align-self: start !important;
+  }
+}
+
+
+/* IDOLVERSE v55 — show the complete original group photo, never crop or zoom it.
+   The rail follows the image's natural rendered height. */
+.group-profile-page .group-profile-visual {
+  display: flex !important;
+  align-items: stretch !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.group-profile-page .group-profile-visual > .group-profile-art {
+  flex: 1 1 0 !important;
+  width: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  align-self: auto !important;
+  overflow: visible !important;
+  padding: 0 !important;
+}
+
+.group-profile-page .group-profile-visual > .group-profile-art img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  transform: none !important;
+  transform-origin: center !important;
+}
+
+.group-profile-page .group-profile-visual > .group-logo-rail {
+  flex: 0 0 clamp(58px, 7vw, 92px) !important;
+  align-self: stretch !important;
+  height: auto !important;
+  min-height: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+@media (max-width: 1000px) {
+  .group-profile-page .group-profile-visual,
+  .group-profile-page .group-profile-visual > .group-profile-art,
+  .group-profile-page .group-profile-visual > .group-profile-art img,
+  .group-profile-page .group-profile-visual > .group-logo-rail {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+}

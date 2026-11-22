@@ -15,6 +15,8 @@ export interface MusicGroup {
   groupPhotoPositionX?: number;
   groupPhotoPositionY?: number;
   groupPhotoScale?: number;
+  /** Individual height of the group photo and its matching violet logo rail, in pixels. */
+  groupHeroHeight?: number;
   groupGallery?: string[];
 }
 
