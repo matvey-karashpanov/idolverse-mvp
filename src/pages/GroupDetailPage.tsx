@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, Globe2, CalendarDays, Building2, Users, Music2, Youtube, Instagram } from 'lucide-react';
+import { ArrowRight, Globe2, CalendarDays, Building2, Users, Music2, Youtube, Instagram } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { getGroups, getNews } from '../utils/contentStorage';
 import { useAppSelector } from '../app/hooks';
