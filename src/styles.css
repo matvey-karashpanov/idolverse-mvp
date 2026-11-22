@@ -6195,13 +6195,18 @@ img.is-error { display: none !important; }
 
 /* IDOLVERSE v48 — image framing defaults: show complete group/news artwork. */
 .group-profile-art.has-group-photo img,
-.group-card-art.has-group-photo img,
 .group-gallery-image img,
 .news-art.has-news-image img,
 .related-news-art.has-related-news-image img {
   object-fit: contain !important;
   transform: none !important;
   background: #0b0f1a;
+}
+
+/* The catalogue card must respect the scale selected in Admin Studio. */
+.group-card-art.has-group-photo img {
+  object-fit: contain !important;
+  transform-origin: center center;
 }
 
 .admin-photo-preview img {
@@ -7610,4 +7615,83 @@ img.is-error { display: none !important; }
     width: 48px !important;
     min-width: 48px !important;
   }
+}
+
+
+/* IDOLVERSE v65 — dimensions are calculated from each image's natural
+   aspect ratio and the administrator's scale setting. Custom properties
+   keep the image, its wrapper and the decorative rail in one sizing system. */
+.group-profile-page .group-profile-visual {
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  align-self: start !important;
+  justify-self: start !important;
+  width: var(--computed-visual-width, max-content) !important;
+  height: var(--computed-visual-height, auto) !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  max-width: 100vw !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+}
+.group-profile-page .group-profile-visual > .group-profile-art {
+  display: block !important;
+  flex: 0 0 var(--computed-photo-width, auto) !important;
+  width: var(--computed-photo-width, auto) !important;
+  height: var(--computed-photo-height, auto) !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+.group-profile-page .group-profile-visual > .group-profile-art img {
+  display: block !important;
+  width: var(--computed-photo-width, auto) !important;
+  height: var(--computed-photo-height, auto) !important;
+  max-width: none !important;
+  max-height: none !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  object-fit: contain !important;
+  object-position: left top !important;
+}
+.group-profile-page .group-profile-visual > .group-logo-rail {
+  position: static !important;
+  flex: 0 0 clamp(58px, 7vw, 92px) !important;
+  align-self: stretch !important;
+  width: clamp(58px, 7vw, 92px) !important;
+  min-width: clamp(58px, 7vw, 92px) !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+@media (max-width: 1000px) {
+  .group-profile-page .group-profile-visual > .group-logo-rail {
+    flex-basis: 58px !important;
+    width: 58px !important;
+    min-width: 58px !important;
+  }
+}
+@media (max-width: 600px) {
+  .group-profile-page .group-profile-visual > .group-logo-rail {
+    flex-basis: 48px !important;
+    width: 48px !important;
+    min-width: 48px !important;
+  }
+}
+
+.group-profile-page .group-profile-visual,
+.group-profile-page .group-profile-visual > .group-profile-art {
+  gap: 0 !important;
 }

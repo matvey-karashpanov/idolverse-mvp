@@ -13,8 +13,42 @@ export function GroupDetailPage() {
   const news = getNews();
   const group = groups.find(item => item.id === id);
   const gallery = useRef<HTMLDivElement>(null);
+  const groupPhotoRef = useRef<HTMLImageElement>(null);
+  const groupVisualRef = useRef<HTMLDivElement>(null);
   const [selectedAlbum, setSelectedAlbum] = useState<{year:string;title:string;releaseDate?:string;image?:string;description?:string;tracks?:string[]}|null>(null);
   const [selectedPhoto, setSelectedPhoto] = useState<{ src: string; alt: string } | null>(null);
+
+  // Compute the displayed image dimensions from its intrinsic aspect ratio.
+  // The decorative rail lives in the same flex row and therefore always has
+  // exactly the rendered photo height, including after admin scale changes.
+  const updateGroupPhotoLayout = () => {
+    if (!group) return;
+    const image = groupPhotoRef.current;
+    const visual = groupVisualRef.current;
+    const art = image?.parentElement as HTMLElement | null;
+    if (!image || !visual || !art || !image.naturalWidth || !image.naturalHeight) return;
+
+    const railWidth = window.innerWidth <= 600 ? 48 : window.innerWidth <= 1000 ? 58 : Math.min(92, Math.max(58, window.innerWidth * 0.07));
+    const maxPhotoWidth = Math.max(180, window.innerWidth * 0.52 - railWidth);
+    const maxPhotoHeight = Math.max(180, Math.min(window.innerHeight * 0.76, 760));
+    const fit = Math.min(1, maxPhotoWidth / image.naturalWidth, maxPhotoHeight / image.naturalHeight);
+    const adminScale = Math.max(0.5, Math.min(1, Number(group.groupPhotoScale ?? 1)));
+    const width = Math.round(image.naturalWidth * fit * adminScale);
+    const height = Math.round(image.naturalHeight * fit * adminScale);
+
+    image.style.setProperty('--computed-photo-width', `${width}px`);
+    image.style.setProperty('--computed-photo-height', `${height}px`);
+    art.style.setProperty('--computed-photo-width', `${width}px`);
+    art.style.setProperty('--computed-photo-height', `${height}px`);
+    visual.style.setProperty('--computed-visual-width', `${width + railWidth}px`);
+    visual.style.setProperty('--computed-visual-height', `${height}px`);
+  };
+
+  useEffect(() => {
+    updateGroupPhotoLayout();
+    window.addEventListener('resize', updateGroupPhotoLayout);
+    return () => window.removeEventListener('resize', updateGroupPhotoLayout);
+  }, [group?.groupPhoto, group?.groupPhotoScale]);
 
   if (!group) return <div className="page"><div className="state-panel"><h2>Группа не найдена</h2><p>Возможно, ссылка устарела.</p><Link className="button primary" to="/groups">Вернуться к каталогу групп</Link></div></div>;
 
@@ -24,8 +58,8 @@ export function GroupDetailPage() {
 
   return <div className="page group-profile-page">
     <section className="group-profile-hero">
-      <div className="group-profile-visual">
-        <div className={`group-profile-art ${group.groupPhoto ? 'has-group-photo' : ''}`}>{group.groupPhoto ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={group.groupPhoto} style={{objectPosition:`${group.groupPhotoPositionX ?? 50}% ${group.groupPhotoPositionY ?? 50}%`,"--group-photo-max-width":`${Math.max(50,Math.min(100,Number(group.groupPhotoScale ?? 1)*100))}%`} as any} alt={`${group.name} — групповая фотография`} /> : <><Users size={42}/><span>ФОТО ГРУППЫ</span></>}</div>
+      <div className="group-profile-visual" ref={groupVisualRef}>
+        <div className={`group-profile-art ${group.groupPhoto ? 'has-group-photo' : ''}`}>{group.groupPhoto ? <img ref={groupPhotoRef} onLoad={(event) => { event.currentTarget.classList.add("is-loaded"); updateGroupPhotoLayout(); }} onError={(event) => event.currentTarget.classList.add("is-error")} loading="eager" decoding="async" src={group.groupPhoto} style={{objectPosition:`${group.groupPhotoPositionX ?? 50}% ${group.groupPhotoPositionY ?? 50}%`}} alt={`${group.name} — групповая фотография`} /> : <><Users size={42}/><span>ФОТО ГРУППЫ</span></>}</div>
         <div className="group-logo-rail" aria-label={`${group.name} — логотип группы`}>{Array.from({length:8},(_,index)=><span key={index}>{group.name}</span>)}</div>
       </div>
       <div className="group-profile-info">
