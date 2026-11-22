@@ -7450,3 +7450,164 @@ img.is-error { display: none !important; }
 .group-profile-page .group-profile-visual > .group-profile-art img {
   max-width: var(--group-photo-max-width, 100%) !important;
 }
+
+
+/* IDOLVERSE v63 — keep the decorative rail in the image's layout flow.
+   The photo's rendered box determines both the visual width and height.
+   Scaling the photo therefore moves/resizes the rail with it. */
+.group-profile-page .group-profile-visual {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  position: static !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+.group-profile-page .group-profile-visual > .group-profile-art {
+  display: block !important;
+  position: static !important;
+  flex: 0 1 auto !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+}
+
+.group-profile-page .group-profile-visual > .group-profile-art img {
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: var(--group-photo-max-width, 100%) !important;
+  max-height: min(76vh, 760px) !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  object-fit: contain !important;
+  object-position: left top !important;
+  transform: none !important;
+}
+
+.group-profile-page .group-profile-visual > .group-logo-rail {
+  position: static !important;
+  inset: auto !important;
+  display: flex !important;
+  flex: 0 0 clamp(58px, 7vw, 92px) !important;
+  align-self: stretch !important;
+  width: clamp(58px, 7vw, 92px) !important;
+  min-width: clamp(58px, 7vw, 92px) !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 1000px) {
+  .group-profile-page .group-profile-visual > .group-profile-art img {
+    max-height: min(68vh, 620px) !important;
+  }
+
+  .group-profile-page .group-profile-visual > .group-logo-rail {
+    flex-basis: 58px !important;
+    width: 58px !important;
+    min-width: 58px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .group-profile-page .group-profile-visual > .group-profile-art img {
+    max-height: min(62vh, 480px) !important;
+  }
+
+  .group-profile-page .group-profile-visual > .group-logo-rail {
+    flex-basis: 48px !important;
+    width: 48px !important;
+    min-width: 48px !important;
+    border-radius: 0 14px 14px 0 !important;
+  }
+}
+
+
+/* IDOLVERSE v64 — prevent the visual column from stretching to the
+   height of the adjacent information column. The image is the sole
+   height source; the decorative strip stretches only to that image. */
+.group-profile-page > .group-profile-hero {
+  align-items: start !important;
+}
+
+.group-profile-page .group-profile-visual {
+  align-self: start !important;
+  justify-self: start !important;
+  place-self: start !important;
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  width: max-content !important;
+  max-width: 100% !important;
+  height: fit-content !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.group-profile-page .group-profile-visual > .group-profile-art {
+  align-self: start !important;
+  flex: 0 1 auto !important;
+  width: fit-content !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.group-profile-page .group-profile-visual > .group-profile-art img {
+  width: auto !important;
+  height: auto !important;
+  max-width: var(--group-photo-max-width, 100%) !important;
+  max-height: min(76vh, 760px) !important;
+  object-fit: contain !important;
+  object-position: left top !important;
+  vertical-align: top !important;
+}
+
+.group-profile-page .group-profile-visual > .group-logo-rail {
+  align-self: stretch !important;
+  flex: 0 0 clamp(58px, 7vw, 92px) !important;
+  width: clamp(58px, 7vw, 92px) !important;
+  min-width: clamp(58px, 7vw, 92px) !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  position: static !important;
+  inset: auto !important;
+  overflow: hidden !important;
+}
+
+@media (max-width: 1000px) {
+  .group-profile-page .group-profile-visual > .group-logo-rail {
+    flex-basis: 58px !important;
+    width: 58px !important;
+    min-width: 58px !important;
+  }
+}
+@media (max-width: 600px) {
+  .group-profile-page .group-profile-visual > .group-logo-rail {
+    flex-basis: 48px !important;
+    width: 48px !important;
+    min-width: 48px !important;
+  }
+}
