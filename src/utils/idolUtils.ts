@@ -10,7 +10,7 @@ export function filterIdols(idols: Idol[], query: string, direction: DirectionFi
 }
 export function validateCorrection(input: { name: string; email: string; message: string }): Record<string, string> {
   const errors: Record<string, string> = {};
-  if (input.name.trim().length < 2) errors.name = 'Укажите имя (минимум 2 символа).';
+
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email.trim())) errors.email = 'Введите корректный email.';
   if (input.message.trim().length < 10) errors.message = 'Опишите исправление подробнее (минимум 10 символов).';
   return errors;

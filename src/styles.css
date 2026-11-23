@@ -6111,13 +6111,13 @@ img.is-error { display: none !important; }
   border-radius: 11px;
   background: linear-gradient(135deg, #c4a8ff, #8069e8);
   color: #171126;
-  font: 900 14px/1 'Onest', sans-serif;
+  font: 900 19px/1 'Onest', sans-serif;
   letter-spacing: -2px;
   padding-right: 2px;
   box-shadow: 0 5px 18px #9279ed33;
 }
-.header .iv-logo-mark { width: 27px; height: 27px; border-radius: 9px; font-size: 11px; }
-.admin-brand-mark.iv-logo-mark { width: 42px; height: 42px; border-radius: 13px; font-size: 17px; }
+.header .iv-logo-mark { width: 32px; height: 32px; border-radius: 10px; font-size: 16px; }
+.admin-brand-mark.iv-logo-mark { width: 44px; height: 44px; border-radius: 13px; font-size: 22px; }
 .admin-topbar-right .admin-live-dot { display: none; }
 .admin-profile-mini { display: none !important; }
 .admin-sidebar-bottom { margin-top: auto; border-top: 1px solid var(--line); padding-top: 8px; }
@@ -7816,3 +7816,142 @@ img.is-error { display: none !important; }
     font-size: clamp(25px, 7.4vw, 30px) !important;
   }
 }
+
+
+/* IDOLVERSE v70 — per-slide desktop hero blending.
+   The fade is strongest only behind the headline and clears earlier on
+   photographs whose members are close to the left edge. Mobile layout
+   remains untouched: it already displays the full image above the title. */
+@media (min-width: 701px) {
+  .dashboard-hero-carousel::after,
+  .dashboard-hero-carousel.hero-slide-1::after {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(23, 20, 45, 1) 0%,
+        rgba(23, 20, 45, .96) var(--hero-fade-solid, 16%),
+        rgba(23, 20, 45, .78) var(--hero-fade-mid, 29%),
+        rgba(23, 20, 45, .38) var(--hero-fade-soft, 44%),
+        rgba(23, 20, 45, .10) 57%,
+        rgba(23, 20, 45, 0) 68%
+      ),
+      linear-gradient(
+        0deg,
+        rgba(11, 15, 26, .18) 0%,
+        transparent 24%,
+        transparent 82%,
+        rgba(11, 15, 26, .08) 100%
+      ) !important;
+  }
+
+  .dashboard-hero-carousel.hero-gradient-soft {
+    --hero-fade-solid: 12%;
+    --hero-fade-mid: 23%;
+    --hero-fade-soft: 36%;
+  }
+
+  .dashboard-hero-carousel.hero-gradient-balanced {
+    --hero-fade-solid: 19%;
+    --hero-fade-mid: 33%;
+    --hero-fade-soft: 49%;
+  }
+
+  .dashboard-hero-slide {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+
+  .dashboard-hero-copy h1 {
+    text-shadow:
+      0 2px 18px rgba(12, 9, 28, .38),
+      0 1px 3px rgba(12, 9, 28, .22) !important;
+  }
+}
+
+
+/* IDOLVERSE v71 — desktop hero image source switching.
+   display: contents keeps the existing absolute image positioning while
+   allowing a wider, softly extended desktop source and the untouched
+   original photograph on mobile. */
+.dashboard-hero-picture {
+  display: contents;
+}
+
+
+/* IDOLVERSE v75 — purple overlay over user-extended carousel photos.
+   The extended background remains visible under the tint, then fades smoothly
+   into the original photo. Mobile keeps the clean, unfiltered full image. */
+@media (min-width: 701px) {
+  .dashboard-hero-carousel::after,
+  .dashboard-hero-carousel.hero-slide-1::after {
+    content: "" !important;
+    pointer-events: none !important;
+    background:
+      linear-gradient(
+        90deg,
+        rgba(23, 20, 45, 1) 0%,
+        rgba(23, 20, 45, .99) 10%,
+        rgba(23, 20, 45, .94) 19%,
+        rgba(23, 20, 45, .78) 29%,
+        rgba(23, 20, 45, .48) 40%,
+        rgba(23, 20, 45, .20) 51%,
+        rgba(23, 20, 45, .04) 62%,
+        rgba(23, 20, 45, 0) 69%
+      ),
+      linear-gradient(
+        0deg,
+        rgba(11, 15, 26, .16) 0%,
+        transparent 24%,
+        transparent 82%,
+        rgba(11, 15, 26, .08) 100%
+      ) !important;
+  }
+}
+
+
+/* IDOLVERSE v76 — compact, stronger seam blend for bright and dark photos.
+   Keep the violet field solid behind the heading, then dissolve it quickly
+   across the extended background instead of tinting most of the photograph. */
+@media (min-width: 701px) {
+  .dashboard-hero-carousel::after,
+  .dashboard-hero-carousel.hero-slide-1::after {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(23, 20, 45, 1) 0%,
+        rgba(23, 20, 45, 1) 25%,
+        rgba(23, 20, 45, .99) 30%,
+        rgba(23, 20, 45, .91) 34%,
+        rgba(23, 20, 45, .68) 39%,
+        rgba(23, 20, 45, .34) 44%,
+        rgba(23, 20, 45, .10) 49%,
+        rgba(23, 20, 45, 0) 54%
+      ),
+      linear-gradient(
+        0deg,
+        rgba(11, 15, 26, .10) 0%,
+        transparent 18%,
+        transparent 86%,
+        rgba(11, 15, 26, .04) 100%
+      ) !important;
+  }
+
+  .dashboard-hero-carousel.hero-gradient-soft {
+    --hero-fade-solid: 25%;
+    --hero-fade-mid: 34%;
+    --hero-fade-soft: 44%;
+  }
+
+  .dashboard-hero-carousel.hero-gradient-balanced {
+    --hero-fade-solid: 25%;
+    --hero-fade-mid: 34%;
+    --hero-fade-soft: 44%;
+  }
+}
+
+/* Independent admin-controlled zoom for idol catalog and profile portraits */
+.idol-card-photo { overflow: hidden; }
+.idol-card-photo img { transform-origin: center; }
+.profile-photo { overflow: hidden; }
+.profile-photo img { transform-origin: center; }
+.optional-field { color: var(--muted, #9aa3b8); font-size: .85em; font-weight: 400; }

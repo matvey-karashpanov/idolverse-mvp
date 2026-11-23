@@ -35,7 +35,7 @@ export function IdolDetailPage() {
       <Link className="back-link" to="/idols"><ArrowLeft size={16}/> Назад к каталогу</Link>
 
       <section className="profile-hero">
-        <div className={`profile-photo ${idol.photo ? 'has-artist-photo' : 'photo-placeholder'} ${['wangyibo', 'mingyu', 'scoups', 'dino'].includes(idol.id) ? `zoom-portrait ${idol.id}-portrait` : ['joshua', 'wonwoo', 'jun', 'hoshi', 'woozi'].includes(idol.id) ? 'subtle-zoom-portrait' : ''}`}>{idol.photo ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={idol.photo} style={{ objectPosition: `${idol.photoPositionX ?? 50}% ${idol.photoPositionY ?? 35}%` }} alt={`${idol.name} — фотография артиста`} /> : <><Music2 size={38}/><span>ФОТО АРТИСТА</span></>}</div>
+        <div className={`profile-photo ${idol.photo ? 'has-artist-photo' : 'photo-placeholder'} ${['wangyibo', 'mingyu', 'scoups', 'dino'].includes(idol.id) ? `zoom-portrait ${idol.id}-portrait` : ['joshua', 'wonwoo', 'jun', 'hoshi', 'woozi'].includes(idol.id) ? 'subtle-zoom-portrait' : ''}`}>{idol.photo ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={idol.photo} style={{ objectPosition: `${idol.photoPositionX ?? 50}% ${idol.photoPositionY ?? 35}%`, transform: idol.photoScale ? `scale(${idol.photoScale})` : undefined }} alt={`${idol.name} — фотография артиста`} /> : <><Music2 size={38}/><span>ФОТО АРТИСТА</span></>}</div>
         <div className="profile-heading">
           <h1>{idol.name}</h1>
           <p className="native-name">{idol.nativeName}</p>

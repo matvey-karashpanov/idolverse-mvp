@@ -12,6 +12,6 @@ describe('filterIdols', () => {
  it('returns empty list when there is no match', () => { expect(filterIdols(mockIdols, 'unknown-artist', 'Все')).toHaveLength(0); });
 });
 describe('validateCorrection', () => {
- it('returns all field errors for invalid values', () => { expect(validateCorrection({name:'A',email:'wrong',message:'short'})).toEqual({name:'Укажите имя (минимум 2 символа).',email:'Введите корректный email.',message:'Опишите исправление подробнее (минимум 10 символов).'}); });
- it('accepts valid values', () => { expect(validateCorrection({name:'Anna',email:'anna@example.com',message:'Please correct this artist profile.'})).toEqual({}); });
+ it('returns all field errors for invalid values', () => { expect(validateCorrection({name:'',email:'wrong',message:'short'})).toEqual({email:'Введите корректный email.',message:'Опишите исправление подробнее (минимум 10 символов).'}); });
+ it('allows an empty display name', () => { expect(validateCorrection({name:'',email:'anna@example.com',message:'Please correct this artist profile.'})).toEqual({}); });
 });

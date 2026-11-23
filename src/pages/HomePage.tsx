@@ -18,9 +18,23 @@ const groupLogos: Record<string, string> = {
   ive: assetUrl('/images/ive-logo.jpg'),
 };
 const heroSlides = [
-  { image: assetUrl('/images/home-carousel-1.jpg'), alt: 'TOMORROW X TOGETHER', groupId: 'txt', groupName: 'TOMORROW X TOGETHER' },
-  { image: assetUrl('/images/home-carousel-2.jpg'), alt: 'BLACKPINK', groupId: 'blackpink', groupName: 'BLACKPINK' },
-  { image: assetUrl('/images/ateez-carousel.jpg'), alt: 'Stray Kids', groupId: 'stray-kids', groupName: 'STRAY KIDS' },
+  {
+    image: assetUrl('/images/home-carousel-1.jpg'),
+    desktopImage: assetUrl('/images/hero-straykids-wide.webp'),
+    alt: 'Stray Kids',
+    groupId: 'stray-kids',
+    groupName: 'STRAY KIDS',
+    gradient: 'soft',
+  },
+  { image: assetUrl('/images/home-carousel-2.jpg'), desktopImage: assetUrl('/images/hero-blackpink-wide.webp'), alt: 'BLACKPINK', groupId: 'blackpink', groupName: 'BLACKPINK', gradient: 'soft' },
+  {
+    image: assetUrl('/images/newjeans-carousel-updated.webp'),
+    desktopImage: assetUrl('/images/newjeans-carousel-updated.webp'),
+    alt: 'NewJeans',
+    groupId: 'newjeans',
+    groupName: 'NEWJEANS',
+    gradient: 'soft',
+  },
 ];
 
 export function HomePage() {
@@ -40,9 +54,14 @@ export function HomePage() {
   return (
     <div className="home-dashboard">
       <section className="dashboard-hero">
-        <div className={`dashboard-hero-carousel hero-slide-${heroSlide}`} aria-label="Фотогалерея групп">
-          <Link className="dashboard-hero-slide-link" to={`/groups/${heroSlides[heroSlide].groupId}`} aria-label={`Открыть страницу ${heroSlides[heroSlide].groupName}`}>
-            <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" className="dashboard-hero-slide" src={heroSlides[heroSlide].image} alt={heroSlides[heroSlide].alt} />
+        <div className={`dashboard-hero-carousel hero-slide-${heroSlide} hero-gradient-${heroSlides[heroSlide].gradient}`} aria-label="Фотогалерея групп">
+          <Link className="dashboard-hero-slide-link" to={heroSlides[heroSlide].groupId === 'newjeans' ? '/groups' : `/groups/${heroSlides[heroSlide].groupId}`} aria-label={`Открыть ${heroSlides[heroSlide].groupName}`}>
+            <picture className="dashboard-hero-picture">
+              {heroSlides[heroSlide].desktopImage && (
+                <source media="(min-width: 701px)" srcSet={heroSlides[heroSlide].desktopImage} />
+              )}
+              <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" className="dashboard-hero-slide" src={heroSlides[heroSlide].image} alt={heroSlides[heroSlide].alt} />
+            </picture>
             <span className="hero-slide-caption">{heroSlides[heroSlide].groupName}</span>
           </Link>
           <div className="hero-carousel-dots" aria-label="Слайды карусели">

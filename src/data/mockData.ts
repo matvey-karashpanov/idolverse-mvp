@@ -3,7 +3,7 @@ export type MusicDirection = 'K-POP' | 'C-POP' | 'J-POP';
 export interface Idol {
   id: string; name: string; nativeName: string; direction: MusicDirection; group: string;
   role: string; birthday: string; country: string; agency: string; bio: string;
-  debut: string; status: 'Активен' | 'Сольный артист'; photo?: string; photoPositionX?: number; photoPositionY?: number;
+  debut: string; status: 'Активен' | 'Сольный артист'; photo?: string; photoPositionX?: number; photoPositionY?: number; photoScale?: number; catalogPhotoPositionX?: number; catalogPhotoPositionY?: number; catalogPhotoScale?: number;
 }
 
 export const mockIdols: Idol[] = [
