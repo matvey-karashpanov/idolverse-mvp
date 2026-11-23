@@ -78,7 +78,7 @@ export function normalizeLegacyCatalog(idols: Idol[], groups: MusicGroup[], news
     (group.discography || []).forEach((release, index) => {
       const albumId = id('album', group.id, release.title, release.year || String(index));
       albums.push({ id: albumId, title: release.title, year: release.year, releaseDate: release.releaseDate, description: release.description, coverImage: release.image, type: albumType(release.title) });
-      albumGroups.push({ id: id('album-group', albumId, group.id), albumId, groupId: group.id, relationshipType: release.memberIds?.length ? 'project_release' : 'group_release' });
+      albumGroups.push({ id: id('album-group', albumId, group.id), albumId, groupId: group.id, relationshipType: 'group_release' });
       (release.memberIds || []).forEach((idolId) => {
         if (idols.some((idol) => idol.id === idolId)) albumCredits.push({ id: id('album-credit', albumId, idolId, 'performer'), albumId, idolId, role: 'performer' });
       });

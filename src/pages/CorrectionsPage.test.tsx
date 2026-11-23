@@ -35,7 +35,6 @@ describe('CorrectionsPage', () => {
 
     await user.click(screen.getByRole('button', { name: /отправить предложение/i }));
 
-    expect(await screen.findByText(/укажите имя/i)).toBeInTheDocument();
     expect(screen.getByText(/корректный email/i)).toBeInTheDocument();
     expect(screen.getByText(/опишите исправление подробнее/i)).toBeInTheDocument();
     expect(store.getState().corrections.items).toHaveLength(0);
@@ -45,8 +44,7 @@ describe('CorrectionsPage', () => {
     const user = userEvent.setup();
     const { store } = renderPage();
 
-    await user.type(screen.getByLabelText(/ваше имя/i), 'Anna');
-    await user.type(screen.getByLabelText(/email для связи/i), 'anna@example.com');
+        await user.type(screen.getByLabelText(/email для связи/i), 'anna@example.com');
     await user.selectOptions(screen.getByLabelText(/к чему относится предложение/i), 'Профиль айдола');
     await user.type(
       screen.getByLabelText(/описание исправления/i),
@@ -57,6 +55,7 @@ describe('CorrectionsPage', () => {
     expect(await screen.findByRole('status')).toHaveTextContent(/предложение сохранено/i);
     expect(store.getState().corrections.items).toHaveLength(1);
     expect(store.getState().corrections.items[0].email).toBe('anna@example.com');
+    expect(store.getState().corrections.items[0].name).toBe('');
     expect(JSON.parse(localStorage.getItem('idolverse-corrections') || '[]')).toHaveLength(1);
   });
 });
