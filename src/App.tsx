@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { Layout } from './components/Layout';
 import { loadIdols } from './features/idols/idolsSlice';
+import { getCatalog } from './domain/catalogStorage';
 import { AdminPage } from './pages/AdminPage';
 import { CorrectionsPage } from './pages/CorrectionsPage';
 import { GroupDetailPage } from './pages/GroupDetailPage';
@@ -16,6 +17,11 @@ import { NewsPage } from './pages/NewsPage';
 function AppRoutes() {
   const dispatch = useAppDispatch();
   const status = useAppSelector((state) => state.idols.status);
+
+  useEffect(() => {
+    // Prepare the normalized catalog once; legacy screens remain compatible during this migration stage.
+    getCatalog();
+  }, []);
 
   useEffect(() => {
     if (status === 'idle') {

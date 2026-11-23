@@ -159,3 +159,13 @@ Run `npm run format` to format the project and `npm run format:check` to verify 
 The admin workspace now includes separate sections for artists, groups, and news. Admins can create, edit, and delete entries, upload images, and adjust artist portrait framing with horizontal/vertical position controls. Uploaded images are resized to a maximum dimension of 1400px and compressed before saving.
 
 **Storage limitation:** this project is still a static GitHub Pages frontend. Content changes and uploaded images are stored in the current browser's `localStorage`, so they persist in that browser but are not synchronized to other visitors or devices. For shared public publishing, authentication, and durable image hosting, connect a backend/CMS (for example Supabase or Firebase) before using the admin panel as a production content-management system. Large image uploads may still reach the browser's storage quota.
+
+## v79 — подготовка нормализованной модели данных
+
+Добавлен доменный слой `src/domain/catalog.ts` с отдельными сущностями и связями для артистов, групп, агентств, альбомов, треков и новостей. `src/domain/catalogStorage.ts` выполняет одноразовую, неразрушающую миграцию данных MVP v78 в нормализованный формат `idolverse-normalized-catalog-v1`. Исходные ключи localStorage не удаляются и продолжают обслуживать существующие экраны — это переходный этап, а не переключение всего интерфейса на новую модель.
+
+Целевая схема PostgreSQL находится в `database/schema.sql`. В ней связи многие-ко-многим вынесены в отдельные таблицы (`group_memberships`, `idol_agencies`, `group_agencies`, `album_groups`, `album_credits`, `news_groups`, `news_idols`). История участия и контрактов хранится датами, а не удалением записей. Файлы изображений предполагается хранить в объектном хранилище, в БД — только URL и метаданные.
+
+Для получения нормализованного каталога используйте `getCatalog()`. Сохранение выполняется через `saveCatalog()` / `updateCatalog()`. Функции `getAlbumsForIdol()` и `getNewsForIdol()` демонстрируют получение материалов через связи, без копирования записей в профили.
+
+Важно: v79 — архитектурный фундамент и миграция локальных демонстрационных данных. Существующие формы админки пока остаются на прежнем формате; следующий этап — перевести формы групп/айдолов/новостей на операции над нормализованным каталогом, затем подключить API и PostgreSQL. SQL-схема является проектной заготовкой и требует применения через миграции после появления backend.
