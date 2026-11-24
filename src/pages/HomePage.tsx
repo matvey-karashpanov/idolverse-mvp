@@ -28,8 +28,8 @@ const heroSlides = [
   },
   { image: assetUrl('/images/home-carousel-2.jpg'), desktopImage: assetUrl('/images/hero-blackpink-wide.webp'), alt: 'BLACKPINK', groupId: 'blackpink', groupName: 'BLACKPINK', gradient: 'soft' },
   {
-    image: assetUrl('/images/newjeans-carousel-updated.webp'),
-    desktopImage: assetUrl('/images/newjeans-carousel-updated.webp'),
+    image: assetUrl('/images/newjeans-carousel.webp'),
+    desktopImage: assetUrl('/images/hero-newjeans-wide.webp'),
     alt: 'NewJeans',
     groupId: 'newjeans',
     groupName: 'NEWJEANS',
@@ -58,7 +58,7 @@ export function HomePage() {
           <Link className="dashboard-hero-slide-link" to={heroSlides[heroSlide].groupId === 'newjeans' ? '/groups' : `/groups/${heroSlides[heroSlide].groupId}`} aria-label={`Открыть ${heroSlides[heroSlide].groupName}`}>
             <picture className="dashboard-hero-picture">
               {heroSlides[heroSlide].desktopImage && (
-                <source media="(min-width: 701px)" srcSet={heroSlides[heroSlide].desktopImage} />
+                <source media="(min-width: 1001px)" srcSet={heroSlides[heroSlide].desktopImage} />
               )}
               <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" className="dashboard-hero-slide" src={heroSlides[heroSlide].image} alt={heroSlides[heroSlide].alt} />
             </picture>

@@ -169,3 +169,43 @@ The admin workspace now includes separate sections for artists, groups, and news
 Для получения нормализованного каталога используйте `getCatalog()`. Сохранение выполняется через `saveCatalog()` / `updateCatalog()`. Функции `getAlbumsForIdol()` и `getNewsForIdol()` демонстрируют получение материалов через связи, без копирования записей в профили.
 
 Важно: v79 — архитектурный фундамент и миграция локальных демонстрационных данных. Существующие формы админки пока остаются на прежнем формате; следующий этап — перевести формы групп/айдолов/новостей на операции над нормализованным каталогом, затем подключить API и PostgreSQL. SQL-схема является проектной заготовкой и требует применения через миграции после появления backend.
+
+
+## v85 — адаптивная главная страница
+
+Главный баннер перестроен как единая полноширинная композиция: фотография занимает весь баннер, фиолетовый градиент закреплён у левого края самого баннера, а заголовок расположен поверх него. На планшетах и телефонах фотография показывается целиком, а заголовок переносится под неё. Ограничение ширины применяется только к информационным колонкам, не к главной странице.
+
+
+## v86 — планшетный breakpoint главного баннера
+
+На ширинах до 1200px включительно используется планшетная композиция: фотография показывается целиком в пропорции 16:9 без затемняющего градиента, заголовок находится в отдельной фиолетовой панели под фото. Это предотвращает панорамное обрезание снимка и затемнение участников на промежуточных ширинах, включая 1016px. На широких desktop-экранах сохраняется полноширинный баннер с градиентом.
+
+
+## v87 — fix photo alignment at tablet widths
+
+Overrode the legacy desktop rule that kept the carousel image link at `60vw` and aligned it to the right. At widths up to 1200px the image link now fills the entire carousel, and the image is centered with `object-fit: contain`, so there is no empty half-panel or cropped group members.
+
+
+## v88 — center group photos on narrow screens
+
+On tablet and mobile widths, the group profile's photo and violet logo rail are now centered together inside the available width. The image's configured scale and aspect ratio remain unchanged; this only corrects horizontal alignment when the information section moves below the visual.
+
+
+## v89 — responsive admin workspace
+
+The admin shell, main content, and management cards now explicitly constrain themselves to the viewport on mobile and tablet widths. Artist/group/news lists use a single fluid column on mobile, while tablet widths use an adaptive grid without fixed-width overflow.
+
+
+## v90 — mobile admin sign-out
+
+The sign-out action is visible again in the compact admin sidebar and spans the full navigation width on screens up to 700px.
+
+
+## v91 — profile carousels on narrow screens
+
+Hide the floating right-side next arrow in idol/group profile carousels at viewport widths up to 1024px. The horizontal tracks remain available for touch swipe, trackpad, and horizontal scrolling.
+
+
+## v92 — short edge-anchored hero blend
+
+The desktop homepage hero uses a narrow violet fade attached to the left edge of the right-aligned photo. The old full-width overlay is disabled, so most of the image remains at its original brightness. Tablet/mobile layouts keep their stacked image-and-heading composition.
