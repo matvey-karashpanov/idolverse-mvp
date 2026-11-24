@@ -8982,3 +8982,67 @@ img.is-error { display: none !important; }
     width: calc(clamp(300px, 19vw, 420px) + 3px) !important;
   }
 }
+
+
+/* IDOLVERSE v96 — show the complete desktop hero photograph.
+   The source images are wide but not as panoramic as the hero viewport.
+   'cover' crops heads/feet at very wide resolutions; 'contain' preserves
+   the full frame and keeps it aligned to the right edge. */
+@media (min-width: 1201px) {
+  .dashboard-hero-carousel .dashboard-hero-slide-link {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+  }
+
+  .dashboard-hero-carousel .dashboard-hero-picture {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .dashboard-hero-carousel .dashboard-hero-slide {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: right center !important;
+    transform: none !important;
+  }
+}
+
+/* IDOLVERSE v97 — mobile profile carousels use the full content width.
+   The arrow controls are hidden on compact screens, so their old reserved
+   right gutter only created an empty violet strip beside the cards. */
+@media (max-width: 1024px) {
+  .profile-carousel,
+  .group-member-carousel {
+    padding-right: 0 !important;
+  }
+
+  .profile-card-grid,
+  .profile-photo-grid,
+  .group-member-track {
+    width: 100%;
+    padding-right: 0 !important;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 700px) {
+  .profile-timeline-card,
+  .profile-photo-grid .profile-gallery-placeholder,
+  .profile-gallery-image {
+    flex: 0 0 84%;
+  }
+
+  .group-member-card {
+    flex: 0 0 84%;
+  }
+
+  .profile-gallery-image {
+    height: 220px;
+  }
+}
