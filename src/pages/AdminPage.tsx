@@ -101,14 +101,78 @@ export function AdminPage() {
   </div>;
 }
 
-function ContentManager({title,items,onSave,kind}:{title:string;items:any[];onSave:(items:any[])=>void;kind:'groups'|'news'}) {
-  const [editing,setEditing]=useState<any|null>(null);
+type ManagedDraft = {
+  id: string;
+  name?: string;
+  title?: string;
+  direction?: string;
+  country?: string;
+  debut?: string;
+  agency?: string;
+  status?: string;
+  memberCount?: number;
+  members?: string[];
+  discography?: MusicGroup['discography'];
+  milestones?: MusicGroup['milestones'];
+  groupPhoto?: string;
+  groupPhotoPositionX?: number;
+  groupPhotoPositionY?: number;
+  groupPhotoScale?: number;
+  groupCardPhoto?: string;
+  groupCardPhotoPositionX?: number;
+  groupCardPhotoPositionY?: number;
+  groupCardPhotoScale?: number;
+  category?: string;
+  date?: string;
+  summary?: string;
+  image?: string;
+  imagePositionX?: number;
+  imagePositionY?: number;
+  imageScale?: number;
+  sourceUrl?: string;
+  groupIds?: string[];
+  idolIds?: string[];
+};
+
+type ManagedItem = MusicGroup | NewsItem;
+
+function ContentManager<T extends ManagedItem>({title,items,onSave,kind}:{title:string;items:T[];onSave:(items:T[])=>void;kind:'groups'|'news'}) {
+  const [editing,setEditing]=useState<ManagedDraft|null>(null);
   const [search,setSearch]=useState('');
   const isGroup=kind==='groups';
-  const filtered=items.filter(item=>`${item.name??item.title} ${item.agency??item.category??''}`.toLowerCase().includes(search.toLowerCase()));
-  const update=(key:string,value:any)=>setEditing((current:any)=>({...current,[key]:value}));
-  const upload=async(file:File|undefined,field:string)=>{if(!file)return;try{update(field,await optimizeUploadedImage(file));}catch{window.alert('Не удалось обработать изображение. Попробуй другой файл.');}};
-  const submit=(event:FormEvent)=>{event.preventDefault();const next=editing.id&&items.some(item=>item.id===editing.id)?items.map(item=>item.id===editing.id?editing:item):[{...editing,id:editing.id||`${kind}-${Date.now()}`},...items];onSave(next);setEditing(null);};
+  const filtered=items.filter(item=>{const record=item as ManagedDraft;return `${record.name??record.title??''} ${record.agency??record.category??''}`.toLowerCase().includes(search.toLowerCase());});
+  const update=(key:keyof ManagedDraft,value:ManagedDraft[keyof ManagedDraft])=>setEditing(current=>current?({...current,[key]:value}):current);
+  const upload=async(file:File|undefined,field:keyof ManagedDraft)=>{if(!file)return;try{update(field,await optimizeUploadedImage(file));}catch{window.alert('Не удалось обработать изображение. Попробуй другой файл.');}};
+  const submit=(event:FormEvent<HTMLFormElement>)=>{
+    event.preventDefault();
+    if (!editing) return;
+    const saved = editing as T;
+    const existingIndex = items.findIndex(item => item.id === editing.id);
+    const next = existingIndex >= 0
+      ? items.map((item, index) => index === existingIndex ? saved : item)
+      : [saved, ...items];
+    onSave(next);
+    setEditing(null);
+  };
+  const getCardData = (item:T) => {
+    if (isGroup) {
+      const group = item as MusicGroup;
+      return {
+        image: group.groupCardPhoto || group.groupPhoto,
+        title: group.name,
+        subtitle: `${group.direction} · ${group.agency}`,
+        draft: {
+          ...group,
+          groupCardPhoto: group.groupCardPhoto || group.groupPhoto,
+          groupCardPhotoPositionX: group.groupCardPhotoPositionX ?? group.groupPhotoPositionX ?? 50,
+          groupCardPhotoPositionY: group.groupCardPhotoPositionY ?? group.groupPhotoPositionY ?? 50,
+          groupCardPhotoScale: group.groupCardPhotoScale ?? group.groupPhotoScale ?? 1,
+        } as ManagedDraft,
+      };
+    }
+    const article = item as NewsItem;
+    return { image: article.image, title: article.title, subtitle: article.category, draft: { ...article } as ManagedDraft };
+  };
   const create=()=>setEditing(isGroup?{id:`group-${Date.now()}`,name:'',direction:'K-POP',country:'',debut:'',agency:'',status:'Активна',memberCount:0,members:[],discography:[],milestones:[],groupPhoto:'',groupPhotoPositionX:50,groupPhotoPositionY:50,groupPhotoScale:1,groupCardPhoto:'',groupCardPhotoPositionX:50,groupCardPhotoPositionY:50,groupCardPhotoScale:1}:{id:`news-${Date.now()}`,title:'',category:'Новости айдолов',date:new Date().toLocaleDateString('ru-RU'),summary:'',image:'',imagePositionX:50,imagePositionY:50,imageScale:1,sourceUrl:''});
   return <section><div className="admin-page-heading"><div><h1>{title}</h1></div><div className="admin-heading-count"><strong>{items.length}</strong><span>записей</span></div></div>
     <div className="admin-manager-toolbar"><div className="admin-search catalog-search"><Search size={17}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder={`Поиск: ${title.toLowerCase()}`}/></div><button className="button primary" onClick={create}><Plus size={16}/>Добавить {isGroup?'группу':'новость'}</button></div>
@@ -139,7 +203,7 @@ function ContentManager({title,items,onSave,kind}:{title:string;items:any[];onSa
         <label className="wide">Масштаб фотографии <strong>{Math.round(Number(editing.imageScale??1)*100)}%</strong><input type="range" min="100" max="200" step="5" value={Math.max(100,Math.min(200,Math.round(Number(editing.imageScale??1)*100)))} onChange={e=>update('imageScale',Number(e.target.value)/100)}/></label>
         <div className="admin-photo-preview">{editing.image&&<img src={editing.image} alt="Предпросмотр" style={{objectPosition:`${editing.imagePositionX??50}% ${editing.imagePositionY??50}%`,objectFit:'cover',transform:`scale(${editing.imageScale??1})`}}/>}</div>
       </>}
-    </div><div className="admin-form-actions"><button type="button" className="button secondary" onClick={()=>setEditing(null)}>Отмена</button><button className="button primary" type="submit"><Save size={16}/>Сохранить</button></div></form> : <div className="admin-artist-grid">{filtered.map(item=><article className="admin-artist-card" key={item.id}><div className="admin-artist-photo">{(isGroup?(item.groupCardPhoto||item.groupPhoto):item.image)?<img src={isGroup?(item.groupCardPhoto||item.groupPhoto):item.image} alt=""/>:<ImagePlus size={22}/>}</div><div className="admin-artist-copy"><strong>{isGroup?item.name:item.title}</strong><span>{isGroup?`${item.direction} · ${item.agency}`:item.category}</span></div><button className="admin-edit-button" onClick={()=>setEditing(isGroup?{...item,groupCardPhoto:item.groupCardPhoto||item.groupPhoto,groupCardPhotoPositionX:item.groupCardPhotoPositionX??item.groupPhotoPositionX??50,groupCardPhotoPositionY:item.groupCardPhotoPositionY??item.groupPhotoPositionY??50,groupCardPhotoScale:item.groupCardPhotoScale??item.groupPhotoScale??1}:{...item})}><FilePenLine size={15}/>Изменить</button><button className="admin-delete-action" onClick={()=>onSave(items.filter(entry=>entry.id!==item.id))} aria-label="Удалить"><Trash2 size={15}/></button></article>)}</div>}
+    </div><div className="admin-form-actions"><button type="button" className="button secondary" onClick={()=>setEditing(null)}>Отмена</button><button className="button primary" type="submit"><Save size={16}/>Сохранить</button></div></form> : <div className="admin-artist-grid">{filtered.map(item=>{const card=getCardData(item);return <article className="admin-artist-card" key={item.id}><div className="admin-artist-photo">{card.image?<img src={card.image} alt=""/>:<ImagePlus size={22}/>}</div><div className="admin-artist-copy"><strong>{card.title}</strong><span>{card.subtitle}</span></div><button className="admin-edit-button" onClick={()=>setEditing(card.draft)}><FilePenLine size={15}/>Изменить</button><button className="admin-delete-action" onClick={()=>onSave(items.filter(entry=>entry.id!==item.id))} aria-label="Удалить"><Trash2 size={15}/></button></article>})}</div>}
   </section>;
 }
 
