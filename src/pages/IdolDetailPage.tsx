@@ -7,6 +7,7 @@ import { getNews, getGroups } from '../utils/contentStorage';
 import { RelatedNewsCarousel } from '../components/RelatedNewsCarousel';
 import { ImageLightbox } from '../components/ImageLightbox';
 import { assetUrl } from '../utils/assetUrl';
+import { getPhotoCropStyle } from '../utils/photoCrop';
 
 type IdolAlbum = { year: string; title: string; releaseDate?: string; image?: string; description?: string; tracks?: string[]; memberIds?: string[] };
 
@@ -35,7 +36,10 @@ export function IdolDetailPage() {
       <Link className="back-link" to="/idols"><ArrowLeft size={16}/> Назад к каталогу</Link>
 
       <section className="profile-hero">
-        <div className={`profile-photo ${idol.photo ? 'has-artist-photo' : 'photo-placeholder'} ${['wangyibo', 'mingyu', 'scoups', 'dino'].includes(idol.id) ? `zoom-portrait ${idol.id}-portrait` : ['joshua', 'wonwoo', 'jun', 'hoshi', 'woozi'].includes(idol.id) ? 'subtle-zoom-portrait' : ''}`}>{idol.photo ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={idol.photo} style={{ objectPosition: `${idol.photoPositionX ?? 50}% ${idol.photoPositionY ?? 35}%`, transform: idol.photoScale ? `scale(${idol.photoScale})` : undefined }} alt={`${idol.name} — фотография артиста`} /> : <><Music2 size={38}/><span>ФОТО АРТИСТА</span></>}</div>
+        <div className="idol-profile-visual">
+          <div className={`profile-photo ${idol.photo ? 'has-artist-photo' : 'photo-placeholder'} ${['wangyibo', 'mingyu', 'scoups', 'dino'].includes(idol.id) ? `zoom-portrait ${idol.id}-portrait` : ['joshua', 'wonwoo', 'jun', 'hoshi', 'woozi'].includes(idol.id) ? 'subtle-zoom-portrait' : ''}`}>{idol.photo ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={idol.photo} style={getPhotoCropStyle(idol.photoPositionX ?? 50, idol.photoPositionY ?? 35, idol.photoScale ?? 1.25)} alt={`${idol.name} — фотография артиста`} /> : <><Music2 size={38}/><span>ФОТО АРТИСТА</span></>}</div>
+          <div className="idol-photo-rail" aria-hidden="true"><span>IV</span></div>
+        </div>
         <div className="profile-heading">
           <h1>{idol.name}</h1>
           <p className="native-name">{idol.nativeName}</p>

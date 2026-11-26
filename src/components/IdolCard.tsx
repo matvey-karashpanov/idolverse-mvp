@@ -2,6 +2,7 @@ import { Music2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import type { Idol } from '../data/mockData';
+import { getPhotoCropStyle } from '../utils/photoCrop';
 
 interface IdolCardProps {
   idol: Idol;
@@ -21,9 +22,9 @@ function getPortraitClassName(id: string): string {
 export function IdolCard({ idol }: IdolCardProps) {
   return (
     <Link className="idol-card" to={`/idols/${idol.id}`}>
-      {idol.photo ? (
+      {(idol.catalogPhoto || idol.photo) ? (
         <div className={`idol-card-photo ${getPortraitClassName(idol.id)}`}>
-          <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} src={idol.photo} style={{ objectPosition: `${idol.catalogPhotoPositionX ?? idol.photoPositionX ?? 50}% ${idol.catalogPhotoPositionY ?? idol.photoPositionY ?? 35}%`, transform: idol.catalogPhotoScale ? `scale(${idol.catalogPhotoScale})` : undefined }} alt={`${idol.name} — фотография`} loading="lazy" />
+          <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} src={idol.catalogPhoto || idol.photo} style={getPhotoCropStyle(idol.catalogPhotoPositionX ?? idol.photoPositionX ?? 50, idol.catalogPhotoPositionY ?? idol.photoPositionY ?? 35, idol.catalogPhotoScale ?? 1.25)} alt={`${idol.name} — фотография`} loading="lazy" />
         </div>
       ) : (
         <div className="photo-placeholder">

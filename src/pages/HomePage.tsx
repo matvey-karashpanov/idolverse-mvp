@@ -21,9 +21,9 @@ const heroSlides = [
   {
     image: assetUrl('/images/home-carousel-1.jpg'),
     desktopImage: assetUrl('/images/hero-straykids-wide.webp'),
-    alt: 'Stray Kids',
-    groupId: 'stray-kids',
-    groupName: 'STRAY KIDS',
+    alt: 'TOMORROW X TOGETHER',
+    groupId: 'txt',
+    groupName: 'TXT',
     gradient: 'soft',
   },
   { image: assetUrl('/images/home-carousel-2.jpg'), desktopImage: assetUrl('/images/hero-blackpink-wide.webp'), alt: 'BLACKPINK', groupId: 'blackpink', groupName: 'BLACKPINK', gradient: 'soft' },
@@ -78,7 +78,7 @@ export function HomePage() {
           <div className="dashboard-column-heading"><h2>Последние новости</h2><Link to="/news">Все новости</Link></div>
           <div className="dashboard-news-list">
             {news.map((item, index) => (
-              <Link className="dashboard-news-item" to="/news" key={item.id}>
+              <Link className="dashboard-news-item" to={`/news#news-${item.id}`} key={item.id}>
                 <span className="dashboard-thumb" aria-hidden="true">{item.image ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={item.image} style={{objectPosition:`${item.imagePositionX ?? 50}% ${item.imagePositionY ?? 50}%`,transform:`scale(${item.imageScale ?? 1})`}} alt="" /> : ['✦', '♪', '★', '♫', '✧'][index]}</span>
                 <span>{item.title}</span>
               </Link>

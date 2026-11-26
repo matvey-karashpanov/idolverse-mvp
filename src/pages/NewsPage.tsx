@@ -1,12 +1,14 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { CalendarDays, ArrowUpRight, Newspaper, ExternalLink, Search, ArrowRight } from 'lucide-react';
 import { useAppSelector } from '../app/hooks';
 import { getGroups, getNews } from '../utils/contentStorage';
 import { SectionTitle } from '../components/SectionTitle';
+import { useLocation } from 'react-router-dom';
 
 const directions = ['Все', 'K-POP', 'C-POP', 'J-POP'] as const;
 
 export function NewsPage() {
+  const location = useLocation();
   const idols = useAppSelector((state) => state.idols.items);
   const [query, setQuery] = useState('');
   const [news] = useState(getNews);
@@ -26,6 +28,15 @@ export function NewsPage() {
   }, [news, groups, idols, query, direction]);
   const resetFilters = () => { setQuery(''); setDirection('Все'); };
 
+  useEffect(() => {
+    const targetId = location.hash.slice(1);
+    if (!targetId) return;
+    const timer = window.setTimeout(() => {
+      document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 80);
+    return () => window.clearTimeout(timer);
+  }, [location.hash]);
+
   return <div className="page">
     <SectionTitle title="Новости IDOLVERSE" />
     <div className="catalog-toolbar">
@@ -39,7 +50,7 @@ export function NewsPage() {
     </div>
     <div className="results-line"><span>{filteredNews.length} {filteredNews.length === 1 ? 'новость' : 'новостей'}</span></div>
     {filteredNews.length ? <div className="news-grid">
-      {filteredNews.map((item, index) => <article className="news-card" key={item.id}>
+      {filteredNews.map((item, index) => <article className="news-card" id={`news-${item.id}`} key={item.id}>
         <div className={`news-art ${item.image ? 'has-news-image' : ''}`}>
           {item.image ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} src={item.image} style={{objectPosition:`${item.imagePositionX ?? 50}% ${item.imagePositionY ?? 50}%`,transform:`scale(${item.imageScale ?? 1})`}} alt={item.title} loading="lazy" decoding="async" /> : <><Newspaper size={34}/><span>NEWS / 0{index + 1}</span></>}
         </div>

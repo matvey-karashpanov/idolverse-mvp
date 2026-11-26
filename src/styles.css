@@ -19,7 +19,17 @@
 }
 
 html {
-  scroll-behavior: smooth
+  scroll-behavior: smooth;
+  /* Keep native page scrolling, but hide the browser's visual scrollbar. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 body {
@@ -2612,7 +2622,7 @@ h3,
   min-width: 0;
   scroll-snap-align: start;
   text-align: center;
-  padding: 0 12px 18px;
+  padding: 12px 12px 18px;
   border-radius: 14px;
   background: #101827
 }
@@ -9033,3 +9043,184 @@ img.is-error { display: none !important; }
     flex-basis: 88% !important;
   }
 }
+
+
+/* IDOLVERSE v100 — mobile profile photo alignment.
+   Center the photograph itself in the viewport and attach the decorative
+   rail to its right edge. The rail stretches to the exact photo height. */
+@media (max-width: 700px) {
+  .idol-profile-page .profile-hero {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    justify-items: stretch !important;
+    gap: 18px !important;
+  }
+
+  .idol-profile-page .idol-profile-visual {
+    display: flex !important;
+    flex-flow: row nowrap !important;
+    align-items: stretch !important;
+    width: max-content !important;
+    max-width: calc(100vw - 16px) !important;
+    margin-left: calc(50% + 24px) !important;
+    transform: translateX(-50%) !important;
+    gap: 0 !important;
+  }
+
+  .idol-profile-page .idol-profile-visual > .profile-photo {
+    flex: 0 1 min(78vw, 480px) !important;
+    width: min(78vw, 480px) !important;
+    max-width: calc(100vw - 64px) !important;
+    height: 420px !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    border-radius: 14px 0 0 14px !important;
+  }
+
+  .idol-profile-page .idol-profile-visual > .profile-photo img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+
+  .idol-profile-page .idol-photo-rail {
+    display: flex !important;
+    flex: 0 0 48px !important;
+    width: 48px !important;
+    align-self: stretch !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 14px 14px 0 !important;
+    background: linear-gradient(180deg, #b59aff, #7656d8) !important;
+    color: #171027 !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: 2px !important;
+  }
+
+  .idol-profile-page .profile-heading,
+  .idol-profile-page .profile-facts {
+    min-width: 0 !important;
+  }
+
+  .group-profile-page > .group-profile-hero {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 22px !important;
+    padding: 0 0 26px !important;
+  }
+
+  .group-profile-page .group-profile-visual {
+    position: relative !important;
+    left: calc(50% + 24px) !important;
+    transform: translateX(-50%) !important;
+    width: var(--computed-visual-width, max-content) !important;
+    max-width: calc(100vw - 16px) !important;
+    margin: 0 !important;
+    justify-self: auto !important;
+  }
+
+  .group-profile-page .group-profile-visual > .group-profile-art {
+    flex: 0 0 var(--computed-photo-width, auto) !important;
+    width: var(--computed-photo-width, auto) !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  .group-profile-page .group-profile-visual > .group-profile-art img {
+    display: block !important;
+    width: var(--computed-photo-width, auto) !important;
+    height: var(--computed-photo-height, auto) !important;
+    max-width: none !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+
+  .group-profile-page .group-profile-visual > .group-logo-rail {
+    flex: 0 0 48px !important;
+    width: 48px !important;
+    min-width: 48px !important;
+    height: var(--computed-photo-height, auto) !important;
+    min-height: 0 !important;
+    align-self: stretch !important;
+    margin: 0 !important;
+    border-radius: 0 14px 14px 0 !important;
+  }
+
+  .group-profile-page > .group-profile-hero > .group-profile-info {
+    width: min(var(--max), calc(100% - 32px)) !important;
+    margin-inline: auto !important;
+    padding: 8px 0 12px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .idol-profile-page .idol-profile-visual {
+    margin-left: calc(50% + 22px) !important;
+  }
+  .idol-profile-page .idol-profile-visual > .profile-photo {
+    width: min(78vw, 360px) !important;
+    height: 360px !important;
+  }
+  .idol-profile-page .idol-photo-rail,
+  .group-profile-page .group-profile-visual > .group-logo-rail {
+    flex-basis: 44px !important;
+    width: 44px !important;
+    min-width: 44px !important;
+  }
+  .group-profile-page .group-profile-visual {
+    left: calc(50% + 22px) !important;
+  }
+}
+
+/* The idol rail is a mobile-only companion to the portrait. */
+.idol-profile-page .idol-profile-visual { display: contents; }
+.idol-profile-page .idol-photo-rail { display: none; }
+
+@media (max-width: 700px) {
+  .idol-profile-page .idol-profile-visual {
+    display: flex !important;
+  }
+  .idol-profile-page .idol-photo-rail {
+    display: flex !important;
+  }
+}
+
+
+/* IDOLVERSE v101 — member portraits on group profiles follow the catalog's
+   contained-image treatment, with a narrower centered media frame. */
+.group-member-photo.has-member-photo {
+  width: 82%;
+  max-width: 360px;
+  height: 220px;
+  margin-inline: auto;
+  background: #111827;
+}
+
+.group-member-photo.has-member-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (max-width: 700px) {
+  .group-member-photo.has-member-photo {
+    width: 82%;
+    height: 220px;
+  }
+}
+
+.news-card[id] {
+  scroll-margin-top: 96px;
+}
+
+
+/* Admin idol photo previews use the same contained editor frame as group images. */
+.idol-admin-preview { margin: 2px 0 12px; }
+.idol-admin-preview img { object-position: center; }

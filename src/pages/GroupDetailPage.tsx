@@ -1,3 +1,4 @@
+import { getPhotoCropStyle } from '../utils/photoCrop';
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Globe2, CalendarDays, Building2, Users, Music2, Youtube, Instagram } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
@@ -29,7 +30,7 @@ export function GroupDetailPage() {
     if (!image || !visual || !art || !image.naturalWidth || !image.naturalHeight) return;
 
     const railWidth = window.innerWidth <= 600 ? 48 : window.innerWidth <= 1000 ? 58 : Math.min(92, Math.max(58, window.innerWidth * 0.07));
-    const maxPhotoWidth = Math.max(180, window.innerWidth * 0.52 - railWidth);
+    const maxPhotoWidth = Math.max(180, window.innerWidth <= 700 ? Math.min(window.innerWidth * 0.84, 560) : window.innerWidth * 0.52 - railWidth);
     const maxPhotoHeight = Math.max(180, Math.min(window.innerHeight * 0.76, 760));
     const fit = Math.min(1, maxPhotoWidth / image.naturalWidth, maxPhotoHeight / image.naturalHeight);
     const adminScale = Math.max(0.5, Math.min(1, Number(group.groupPhotoScale ?? 1)));
@@ -59,7 +60,7 @@ export function GroupDetailPage() {
   return <div className="page group-profile-page">
     <section className="group-profile-hero">
       <div className="group-profile-visual" ref={groupVisualRef}>
-        <div className={`group-profile-art ${group.groupPhoto ? 'has-group-photo' : ''}`}>{group.groupPhoto ? <img ref={groupPhotoRef} onLoad={(event) => { event.currentTarget.classList.add("is-loaded"); updateGroupPhotoLayout(); }} onError={(event) => event.currentTarget.classList.add("is-error")} loading="eager" decoding="async" src={group.groupPhoto} style={{objectPosition:`${group.groupPhotoPositionX ?? 50}% ${group.groupPhotoPositionY ?? 50}%`}} alt={`${group.name} — групповая фотография`} /> : <><Users size={42}/><span>ФОТО ГРУППЫ</span></>}</div>
+        <div className={`group-profile-art ${group.groupPhoto ? 'has-group-photo' : ''}`}>{group.groupPhoto ? <img ref={groupPhotoRef} onLoad={(event) => { event.currentTarget.classList.add("is-loaded"); updateGroupPhotoLayout(); }} onError={(event) => event.currentTarget.classList.add("is-error")} loading="eager" decoding="async" src={group.groupPhoto} style={getPhotoCropStyle(group.groupPhotoPositionX ?? 50, group.groupPhotoPositionY ?? 50, group.groupPhotoScale ?? 1.25)} alt={`${group.name} — групповая фотография`} /> : <><Users size={42}/><span>ФОТО ГРУППЫ</span></>}</div>
         <div className="group-logo-rail" aria-label={`${group.name} — логотип группы`}>{Array.from({length:8},(_,index)=><span key={index}>{group.name}</span>)}</div>
       </div>
       <div className="group-profile-info">
@@ -93,7 +94,6 @@ export function GroupDetailPage() {
         </div>
         <button className="profile-carousel-arrow" type="button" aria-label="Следующие участники" onClick={() => gallery.current?.scrollBy({left: 360,behavior:'smooth'})}><ArrowRight/></button>
       </div>
-      {memberProfiles.length > 0 && <p className="group-member-note">Профили участников, уже добавленные в каталог: {memberProfiles.length}. Остальные карточки пока являются заглушками.</p>}
     </section>
 
     <GroupStrip title="Дискография" items={group.discography} onAlbumClick={setSelectedAlbum}/>

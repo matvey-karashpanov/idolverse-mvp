@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useEffect, useLayoutEffect } from 'react';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { Layout } from './components/Layout';
@@ -13,6 +13,45 @@ import { HomePage } from './pages/HomePage';
 import { IdolDetailPage } from './pages/IdolDetailPage';
 import { IdolsPage } from './pages/IdolsPage';
 import { NewsPage } from './pages/NewsPage';
+
+
+function ScrollToTop() {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    // Let React Router, rather than the browser, decide where a new page starts.
+    const previous = window.history.scrollRestoration;
+    window.history.scrollRestoration = 'manual';
+    return () => {
+      window.history.scrollRestoration = previous;
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    if (hash) {
+      // Hash navigation is intentional (for example, opening a specific news item).
+      const frame = window.requestAnimationFrame(() => {
+        const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+        if (target) {
+          target.scrollIntoView({ block: 'start', behavior: 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        }
+      });
+      return () => window.cancelAnimationFrame(frame);
+    }
+
+    // Use an instant reset: the global CSS smooth scrolling must not animate
+    // from the previous page's position and leave the new page halfway down.
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [pathname, hash]);
+
+  return null;
+}
 
 function AppRoutes() {
   const dispatch = useAppDispatch();
@@ -57,6 +96,7 @@ function AppRoutes() {
 export default function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <ScrollToTop />
       <AppRoutes />
     </BrowserRouter>
   );
