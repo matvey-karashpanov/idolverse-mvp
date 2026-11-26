@@ -38,7 +38,6 @@ export function IdolDetailPage() {
       <section className="profile-hero">
         <div className="idol-profile-visual">
           <div className={`profile-photo ${idol.photo ? 'has-artist-photo' : 'photo-placeholder'} ${['wangyibo', 'mingyu', 'scoups', 'dino'].includes(idol.id) ? `zoom-portrait ${idol.id}-portrait` : ['joshua', 'wonwoo', 'jun', 'hoshi', 'woozi'].includes(idol.id) ? 'subtle-zoom-portrait' : ''}`}>{idol.photo ? <img onLoad={(event) => event.currentTarget.classList.add("is-loaded")} onError={(event) => event.currentTarget.classList.add("is-error")} loading="lazy" decoding="async" src={idol.photo} style={getPhotoCropStyle(idol.photoPositionX ?? 50, idol.photoPositionY ?? 35, idol.photoScale ?? 1.25)} alt={`${idol.name} — фотография артиста`} /> : <><Music2 size={38}/><span>ФОТО АРТИСТА</span></>}</div>
-          <div className="idol-photo-rail" aria-hidden="true"><span>IV</span></div>
         </div>
         <div className="profile-heading">
           <h1>{idol.name}</h1>

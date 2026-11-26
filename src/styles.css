@@ -9224,3 +9224,43 @@ img.is-error { display: none !important; }
 /* Admin idol photo previews use the same contained editor frame as group images. */
 .idol-admin-preview { margin: 2px 0 12px; }
 .idol-admin-preview img { object-position: center; }
+
+
+/* Idol profile: decorative rail belongs to group profiles only. */
+.idol-profile-page .idol-photo-rail {
+  display: none !important;
+}
+
+@media (max-width: 700px) {
+  .idol-profile-page .idol-profile-visual {
+    display: block !important;
+    width: min(78vw, 480px) !important;
+    max-width: calc(100vw - 32px) !important;
+    margin: 0 auto !important;
+    transform: none !important;
+  }
+
+  .idol-profile-page .idol-profile-visual > .profile-photo {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 420px !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    border-radius: 14px !important;
+  }
+
+  .idol-profile-page .idol-profile-visual > .profile-photo img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .idol-profile-page .idol-profile-visual > .profile-photo {
+    width: 100% !important;
+    height: 360px !important;
+  }
+}
