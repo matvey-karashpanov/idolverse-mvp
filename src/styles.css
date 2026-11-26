@@ -9264,3 +9264,38 @@ img.is-error { display: none !important; }
     height: 360px !important;
   }
 }
+
+
+/* Mobile idol portrait: center the actual image inside its frame.
+   Keep the desktop crop settings and all group profile layouts unchanged. */
+@media (max-width: 700px) {
+  .idol-profile-page .profile-hero {
+    justify-items: center !important;
+  }
+
+  .idol-profile-page .idol-profile-visual {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    transform: none !important;
+  }
+
+  .idol-profile-page .idol-profile-visual > .profile-photo {
+    width: min(78vw, 480px) !important;
+    max-width: 100% !important;
+    margin-inline: auto !important;
+  }
+
+  .idol-profile-page .idol-profile-visual > .profile-photo img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: 50% 50% !important;
+    transform: none !important;
+    margin-inline: auto !important;
+  }
+}
